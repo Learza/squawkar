@@ -21,435 +21,127 @@
 -->
 <html>
     <head>
-        <meta charset="utf-8" />
-        <meta name="format-detection" content="telephone=no" />
-        <meta name="msapplication-tap-highlight" content="no" />
-        <!-- WARNING: for iOS 7, remove the width=device-width and height=device-height attributes. See https://issues.apache.org/jira/browse/CB-4323 -->
-        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height" />
-        <script type="text/javascript" src="cordova.js"></script>
+        <meta charset="utf-8">
+        <meta name="format-detection" content="telephone=no">
+        <meta name="msapplication-tap-highlight" content="no"><!-- WARNING: for iOS 7, remove the width=device-width and height=device-height attributes. See https://issues.apache.org/jira/browse/CB-4323 -->
+        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height">
+        <!--<script type="text/javascript" src="cordova.js"></script>-->
         <script type="text/javascript" src="js/index.js"></script>
         <script type="text/javascript" src="js/jquery.js"></script>
         <script type="text/javascript" src="//use.typekit.net/myv1nls.js"></script>
-        <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
-        <link rel="stylesheet" type="text/css" href="css/index.css" />
-        <title>Hello World</title>
+        <script type="text/javascript">
+            try{Typekit.load();}catch(e){}
+        </script>
+        <link rel="stylesheet" type="text/css" href="css/index.css">
+        <title>
+            SQUAWKAR
+        </title>
     </head>
     <body>
-    <div id="wrap">
-        <nav class="navbar navbar-static navbar-default" role="navigation">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a href="/" class="navbar-brand">
-                    <img src="logo.png" style="height:55px; width:55px;;" class="pull-left">
-                    <div style="font-size:30px; font-family: 'futura-pt', sans-serif; padding-top:18px; padding-left:10px;" class="pull-left">SQUAWKAR</div>
-                </a>
-            </div>
-            <div class="navbar-collapse collapse">
-                    <ul class="nav navbar-nav navbar-right">
-                        <li>
-                            <a href="/users/sign_up">Register</a>
-                        </li>
-                        <li>
-                            <a href="/users/sign_in">Login</a>
-                        </li>
-                    </ul>
-            </div>
-        </div>
-        </nav>
-        
-<div class="container">
-    <div class="row">
-        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-            <ul class="nav nav-pills">
-                    <li class="active"><a href="/">Latest</a></li>
-
-                    <li><a href="?order=popular">Popular</a></li>
-
-                    <li><a href="?order=commented">Most Commented</a></li>
-            </ul>
-        </div>
-    </div>
-</div>
-
-<hr>
-
-<div class="container">
-    <div class="row">
-        <div class="col-lg-">
-
-        </div>
-    </div>
-</div>
-
-<div class="container">
-        <div class="row">
-            <div class="col-lg-9">
-                <div class="post">
-                    <div style="box-shadow: 0px 0px 0px 0px rgba(34, 34, 34, 0.15),inset 0px -4px 0px 0px #D7351C !important; height:53px; width:50px; border-radius:5px; margin-right:15px;" class="pull-left">
-                    <div class="post-thumb pull-left" style="width:50px;">
-                        <a class="post-thumb" href="/squawks/58" style="">
-                            <img alt="Missing" class="img-rounded" src="photos/graffiti/missing.png" />
-</a>                    </div>
-                </div>
-                <div class="post-content pull-left">
-                    <div style="font-weight:bold; font-size:18px;">
-                        <a href="/squawks/58">Setting goals is the first step in turning the invisible into the visible.</a>
+        <div id="wrap">
+            <nav class="navbar navbar-static navbar-default" role="navigation">
+                <div class="container">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse"><span class="sr-only">Toggle navigation</span></button> <a href="/" class="navbar-brand"><img src="logo.png" style="height:55px; width:55px;;" class="pull-left"></a>
+                        <div style="font-size:30px; font-family: 'futura-pt', sans-serif; padding-top:18px; padding-left:10px;" class="pull-left">
+                            SQUAWKAR
+                        </div>
                     </div>
-                    <p class="text-muted">Posted by <a href="/profile/pappgergely" style="color:#000; text-decoration:none;">pappgergely</a> 4 days ago</p>
-                </div>
-                <div class="clearfix"></div>
-                </div>
-                <div class="post">
-                    <div style="box-shadow: 0px 0px 0px 0px rgba(34, 34, 34, 0.15),inset 0px -4px 0px 0px #D7351C !important; height:53px; width:50px; border-radius:5px; margin-right:15px;" class="pull-left">
-                    <div class="post-thumb pull-left" style="width:50px;">
-                        <a class="post-thumb" href="/squawks/57" style="">
-                            <img alt="Missing" class="img-rounded" src="photos/text/missing.png" />
-</a>                    </div>
-                </div>
-                <div class="post-content pull-left">
-                    <div style="font-weight:bold; font-size:18px;">
-                        <a href="/squawks/57">I hate feeling pretentious, but</a>
+                    <div class="navbar-collapse collapse">
+                        <ul class="nav navbar-nav navbar-right">
+                            <li>
+                                <a href="/users/sign_up">Register</a>
+                            </li>
+                            <li>
+                                <a href="/users/sign_in">Login</a>
+                            </li>
+                        </ul>
                     </div>
-                    <p class="text-muted">Posted by <a href="/profile/lawyerpixie" style="color:#000; text-decoration:none;">lawyerpixie</a> 4 months ago</p>
                 </div>
-                <div class="clearfix"></div>
-                </div>
-                <div class="post">
-                    <div style="box-shadow: 0px 0px 0px 0px rgba(34, 34, 34, 0.15),inset 0px -4px 0px 0px #D7351C !important; height:53px; width:50px; border-radius:5px; margin-right:15px;" class="pull-left">
-                    <div class="post-thumb pull-left" style="width:50px;">
-                        <a class="post-thumb" href="/squawks/56" style="">
-                            <img alt="Missing" class="img-rounded" src="photos/graffiti/missing.png" />
-</a>                    </div>
-                </div>
-                <div class="post-content pull-left">
-                    <div style="font-weight:bold; font-size:18px;">
-                        <a href="/squawks/56">Feel society is constantly there to stop me chasing my dream</a>
+            </nav>
+            <div class="container">
+                <div class="row">
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                        <ul class="nav nav-pills">
+                            <li class="active">
+                                <a href="/">Latest</a>
+                            </li>
+                            <li>
+                                <a href="?order=popular">Popular</a>
+                            </li>
+                            <li>
+                                <a href="?order=commented">Most Commented</a>
+                            </li>
+                        </ul>
                     </div>
-                    <p class="text-muted">Posted by <a href="/profile/dexysmidnightrunner" style="color:#000; text-decoration:none;">DexysMidnightRunner</a> 4 months ago</p>
-                </div>
-                <div class="clearfix"></div>
-                </div>
-                <div class="post">
-                    <div style="box-shadow: 0px 0px 0px 0px rgba(34, 34, 34, 0.15),inset 0px -4px 0px 0px #D7351C !important; height:53px; width:50px; border-radius:5px; margin-right:15px;" class="pull-left">
-                    <div class="post-thumb pull-left" style="width:50px;">
-                        <a class="post-thumb" href="/squawks/55" style="">
-                            <img alt="Missing" class="img-rounded" src="photos/graffiti/missing.png" />
-</a>                    </div>
-                </div>
-                <div class="post-content pull-left">
-                    <div style="font-weight:bold; font-size:18px;">
-                        <a href="/squawks/55">Chase your dreams before your nightmares chase you</a>
-                    </div>
-                    <p class="text-muted">Posted by <a href="/profile/pmoney" style="color:#000; text-decoration:none;">PMoney</a> 4 months ago</p>
-                </div>
-                <div class="clearfix"></div>
-                </div>
-                <div class="post">
-                    <div style="box-shadow: 0px 0px 0px 0px rgba(34, 34, 34, 0.15),inset 0px -4px 0px 0px #D7351C !important; height:53px; width:50px; border-radius:5px; margin-right:15px;" class="pull-left">
-                    <div class="post-thumb pull-left" style="width:50px;">
-                        <a class="post-thumb" href="/squawks/53" style="">
-                            <img alt="Missing" class="img-rounded" src="photos/graffiti/missing.png" />
-</a>                    </div>
-                </div>
-                <div class="post-content pull-left">
-                    <div style="font-weight:bold; font-size:18px;">
-                        <a href="/squawks/53">Sheppardstyle in ze house</a>
-                    </div>
-                    <p class="text-muted">Posted by <a href="/profile/truncheon" style="color:#000; text-decoration:none;">Truncheon</a> 4 months ago</p>
-                </div>
-                <div class="clearfix"></div>
-                </div>
-                <div class="post">
-                    <div style="box-shadow: 0px 0px 0px 0px rgba(34, 34, 34, 0.15),inset 0px -4px 0px 0px #D7351C !important; height:53px; width:50px; border-radius:5px; margin-right:15px;" class="pull-left">
-                    <div class="post-thumb pull-left" style="width:50px;">
-                        <a class="post-thumb" href="/squawks/51" style="">
-                            <img alt="Missing" class="img-rounded" src="photos/text/missing.png" />
-</a>                    </div>
-                </div>
-                <div class="post-content pull-left">
-                    <div style="font-weight:bold; font-size:18px;">
-                        <a href="/squawks/51">Please don&#39;t spread ridiculous news rumors.</a>
-                    </div>
-                    <p class="text-muted">Posted by <a href="/profile/lawyerpixie" style="color:#000; text-decoration:none;">lawyerpixie</a> 4 months ago</p>
-                </div>
-                <div class="clearfix"></div>
-                </div>
-                <div class="post">
-                    <div style="box-shadow: 0px 0px 0px 0px rgba(34, 34, 34, 0.15),inset 0px -4px 0px 0px #D7351C !important; height:53px; width:50px; border-radius:5px; margin-right:15px;" class="pull-left">
-                    <div class="post-thumb pull-left" style="width:50px;">
-                        <a class="post-thumb" href="/squawks/50" style="">
-                            <img alt="Missing" class="img-rounded" src="photos/text/missing.png" />
-</a>                    </div>
-                </div>
-                <div class="post-content pull-left">
-                    <div style="font-weight:bold; font-size:18px;">
-                        <a href="/squawks/50">Name this girl!</a>
-                    </div>
-                    <p class="text-muted">Posted by <a href="/profile/mattsnotyours" style="color:#000; text-decoration:none;">MattsNotYours</a> 4 months ago</p>
-                </div>
-                <div class="clearfix"></div>
-                </div>
-                <div class="post">
-                    <div style="box-shadow: 0px 0px 0px 0px rgba(34, 34, 34, 0.15),inset 0px -4px 0px 0px #D7351C !important; height:53px; width:50px; border-radius:5px; margin-right:15px;" class="pull-left">
-                    <div class="post-thumb pull-left" style="width:50px;">
-                        <a class="post-thumb" href="/squawks/49" style="">
-                            <img alt="Missing" class="img-rounded" src="photos/graffiti/missing.png" />
-</a>                    </div>
-                </div>
-                <div class="post-content pull-left">
-                    <div style="font-weight:bold; font-size:18px;">
-                        <a href="/squawks/49">You only live once, but if you do it right once is enough.</a>
-                    </div>
-                    <p class="text-muted">Posted by <a href="/profile/hammer" style="color:#000; text-decoration:none;">Hammer</a> 4 months ago</p>
-                </div>
-                <div class="clearfix"></div>
-                </div>
-                <div class="post">
-                    <div style="box-shadow: 0px 0px 0px 0px rgba(34, 34, 34, 0.15),inset 0px -4px 0px 0px #D7351C !important; height:53px; width:50px; border-radius:5px; margin-right:15px;" class="pull-left">
-                    <div class="post-thumb pull-left" style="width:50px;">
-                        <a class="post-thumb" href="/squawks/48" style="">
-                            <img alt="Missing" class="img-rounded" src="photos/text/missing.png" />
-</a>                    </div>
-                </div>
-                <div class="post-content pull-left">
-                    <div style="font-weight:bold; font-size:18px;">
-                        <a href="/squawks/48">Are the Tories unlucky ... </a>
-                    </div>
-                    <p class="text-muted">Posted by <a href="/profile/truncheon" style="color:#000; text-decoration:none;">Truncheon</a> 4 months ago</p>
-                </div>
-                <div class="clearfix"></div>
-                </div>
-                <div class="post">
-                    <div style="box-shadow: 0px 0px 0px 0px rgba(34, 34, 34, 0.15),inset 0px -4px 0px 0px #D7351C !important; height:53px; width:50px; border-radius:5px; margin-right:15px;" class="pull-left">
-                    <div class="post-thumb pull-left" style="width:50px;">
-                        <a class="post-thumb" href="/squawks/47" style="">
-                            <img alt="Missing" class="img-rounded" src="photos/text/missing.png" />
-</a>                    </div>
-                </div>
-                <div class="post-content pull-left">
-                    <div style="font-weight:bold; font-size:18px;">
-                        <a href="/squawks/47">Kevin Pietersen&#39;s England career over</a>
-                    </div>
-                    <p class="text-muted">Posted by <a href="/profile/hammer" style="color:#000; text-decoration:none;">Hammer</a> 5 months ago</p>
-                </div>
-                <div class="clearfix"></div>
-                </div>
-                <div class="post">
-                    <div style="box-shadow: 0px 0px 0px 0px rgba(34, 34, 34, 0.15),inset 0px -4px 0px 0px #D7351C !important; height:53px; width:50px; border-radius:5px; margin-right:15px;" class="pull-left">
-                    <div class="post-thumb pull-left" style="width:50px;">
-                        <a class="post-thumb" href="/squawks/46" style="">
-                            <img alt="Missing" class="img-rounded" src="photos/text/missing.png" />
-</a>                    </div>
-                </div>
-                <div class="post-content pull-left">
-                    <div style="font-weight:bold; font-size:18px;">
-                        <a href="/squawks/46">Song Lyrics</a>
-                    </div>
-                    <p class="text-muted">Posted by <a href="/profile/whisk" style="color:#000; text-decoration:none;">Whisk</a> 5 months ago</p>
-                </div>
-                <div class="clearfix"></div>
-                </div>
-                <div class="post">
-                    <div style="box-shadow: 0px 0px 0px 0px rgba(34, 34, 34, 0.15),inset 0px -4px 0px 0px #D7351C !important; height:53px; width:50px; border-radius:5px; margin-right:15px;" class="pull-left">
-                    <div class="post-thumb pull-left" style="width:50px;">
-                        <a class="post-thumb" href="/squawks/45" style="">
-                            <img alt="Missing" class="img-rounded" src="photos/text/missing.png" />
-</a>                    </div>
-                </div>
-                <div class="post-content pull-left">
-                    <div style="font-weight:bold; font-size:18px;">
-                        <a href="/squawks/45">Is it just me or...</a>
-                    </div>
-                    <p class="text-muted">Posted by <a href="/profile/whisk" style="color:#000; text-decoration:none;">Whisk</a> 5 months ago</p>
-                </div>
-                <div class="clearfix"></div>
-                </div>
-                <div class="post">
-                    <div style="box-shadow: 0px 0px 0px 0px rgba(34, 34, 34, 0.15),inset 0px -4px 0px 0px #D7351C !important; height:53px; width:50px; border-radius:5px; margin-right:15px;" class="pull-left">
-                    <div class="post-thumb pull-left" style="width:50px;">
-                        <a class="post-thumb" href="/squawks/44" style="">
-                            <img alt="Missing" class="img-rounded" src="photos/text/missing.png" />
-</a>                    </div>
-                </div>
-                <div class="post-content pull-left">
-                    <div style="font-weight:bold; font-size:18px;">
-                        <a href="/squawks/44">What will the future bring?</a>
-                    </div>
-                    <p class="text-muted">Posted by <a href="/profile/dexysmidnightrunner" style="color:#000; text-decoration:none;">DexysMidnightRunner</a> 5 months ago</p>
-                </div>
-                <div class="clearfix"></div>
-                </div>
-                <div class="post">
-                    <div style="box-shadow: 0px 0px 0px 0px rgba(34, 34, 34, 0.15),inset 0px -4px 0px 0px #D7351C !important; height:53px; width:50px; border-radius:5px; margin-right:15px;" class="pull-left">
-                    <div class="post-thumb pull-left" style="width:50px;">
-                        <a class="post-thumb" href="/squawks/43" style="">
-                            <img alt="Missing" class="img-rounded" src="photos/text/missing.png" />
-</a>                    </div>
-                </div>
-                <div class="post-content pull-left">
-                    <div style="font-weight:bold; font-size:18px;">
-                        <a href="/squawks/43">Star Wars latest chapter brings back Luke, Han and Leia. </a>
-                    </div>
-                    <p class="text-muted">Posted by <a href="/profile/ajmiller" style="color:#000; text-decoration:none;">AJMiller</a> 5 months ago</p>
-                </div>
-                <div class="clearfix"></div>
-                </div>
-                <div class="post">
-                    <div style="box-shadow: 0px 0px 0px 0px rgba(34, 34, 34, 0.15),inset 0px -4px 0px 0px #D7351C !important; height:53px; width:50px; border-radius:5px; margin-right:15px;" class="pull-left">
-                    <div class="post-thumb pull-left" style="width:50px;">
-                        <a class="post-thumb" href="/squawks/42" style="">
-                            <img alt="Missing" class="img-rounded" src="photos/text/missing.png" />
-</a>                    </div>
-                </div>
-                <div class="post-content pull-left">
-                    <div style="font-weight:bold; font-size:18px;">
-                        <a href="/squawks/42">Can chess be sexed up to rival Formula 1?</a>
-                    </div>
-                    <p class="text-muted">Posted by <a href="/profile/hammer" style="color:#000; text-decoration:none;">Hammer</a> 5 months ago</p>
-                </div>
-                <div class="clearfix"></div>
-                </div>
-                <div class="post">
-                    <div style="box-shadow: 0px 0px 0px 0px rgba(34, 34, 34, 0.15),inset 0px -4px 0px 0px #D7351C !important; height:53px; width:50px; border-radius:5px; margin-right:15px;" class="pull-left">
-                    <div class="post-thumb pull-left" style="width:50px;">
-                        <a class="post-thumb" href="/squawks/41" style="">
-                            <img alt="Missing" class="img-rounded" src="photos/text/missing.png" />
-</a>                    </div>
-                </div>
-                <div class="post-content pull-left">
-                    <div style="font-weight:bold; font-size:18px;">
-                        <a href="/squawks/41">Have Labour&#39;s lost the plot with their suggestion for a 50% tax hike?</a>
-                    </div>
-                    <p class="text-muted">Posted by <a href="/profile/hammer" style="color:#000; text-decoration:none;">Hammer</a> 5 months ago</p>
-                </div>
-                <div class="clearfix"></div>
-                </div>
-                <div class="post">
-                    <div style="box-shadow: 0px 0px 0px 0px rgba(34, 34, 34, 0.15),inset 0px -4px 0px 0px #D7351C !important; height:53px; width:50px; border-radius:5px; margin-right:15px;" class="pull-left">
-                    <div class="post-thumb pull-left" style="width:50px;">
-                        <a class="post-thumb" href="/squawks/40" style="">
-                            <img alt="Missing" class="img-rounded" src="photos/text/missing.png" />
-</a>                    </div>
-                </div>
-                <div class="post-content pull-left">
-                    <div style="font-weight:bold; font-size:18px;">
-                        <a href="/squawks/40">Politicians</a>
-                    </div>
-                    <p class="text-muted">Posted by <a href="/profile/truncheon" style="color:#000; text-decoration:none;">Truncheon</a> 5 months ago</p>
-                </div>
-                <div class="clearfix"></div>
-                </div>
-                <div class="post">
-                    <div style="box-shadow: 0px 0px 0px 0px rgba(34, 34, 34, 0.15),inset 0px -4px 0px 0px #D7351C !important; height:53px; width:50px; border-radius:5px; margin-right:15px;" class="pull-left">
-                    <div class="post-thumb pull-left" style="width:50px;">
-                        <a class="post-thumb" href="/squawks/39" style="">
-                            <img alt="Missing" class="img-rounded" src="photos/graffiti/missing.png" />
-</a>                    </div>
-                </div>
-                <div class="post-content pull-left">
-                    <div style="font-weight:bold; font-size:18px;">
-                        <a href="/squawks/39">A pessimist is an optimist in full possession of the facts!</a>
-                    </div>
-                    <p class="text-muted">Posted by <a href="/profile/truncheon" style="color:#000; text-decoration:none;">Truncheon</a> 5 months ago</p>
-                </div>
-                <div class="clearfix"></div>
-                </div>
-                <div class="post">
-                    <div style="box-shadow: 0px 0px 0px 0px rgba(34, 34, 34, 0.15),inset 0px -4px 0px 0px #D7351C !important; height:53px; width:50px; border-radius:5px; margin-right:15px;" class="pull-left">
-                    <div class="post-thumb pull-left" style="width:50px;">
-                        <a class="post-thumb" href="/squawks/38" style="">
-                            <img alt="Missing" class="img-rounded" src="photos/text/missing.png" />
-</a>                    </div>
-                </div>
-                <div class="post-content pull-left">
-                    <div style="font-weight:bold; font-size:18px;">
-                        <a href="/squawks/38">The university system is so flawed</a>
-                    </div>
-                    <p class="text-muted">Posted by <a href="/profile/dolphin" style="color:#000; text-decoration:none;">Dolphin</a> 5 months ago</p>
-                </div>
-                <div class="clearfix"></div>
-                </div>
-                <div class="post">
-                    <div style="box-shadow: 0px 0px 0px 0px rgba(34, 34, 34, 0.15),inset 0px -4px 0px 0px #D7351C !important; height:53px; width:50px; border-radius:5px; margin-right:15px;" class="pull-left">
-                    <div class="post-thumb pull-left" style="width:50px;">
-                        <a class="post-thumb" href="/squawks/37" style="">
-                            <img alt="Missing" class="img-rounded" src="photos/text/missing.png" />
-</a>                    </div>
-                </div>
-                <div class="post-content pull-left">
-                    <div style="font-weight:bold; font-size:18px;">
-                        <a href="/squawks/37">Time to sell the BBC?</a>
-                    </div>
-                    <p class="text-muted">Posted by <a href="/profile/lawrence" style="color:#000; text-decoration:none;">Lawrence</a> 5 months ago</p>
-                </div>
-                <div class="clearfix"></div>
                 </div>
             </div>
-            <div class="col-lg-3">
-                <form accept-charset="UTF-8" action="/search" method="get"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="&#x2713;" /></div>
-                    <div class="input-group input-group-lg">
-                        <input class="form-control" id="q" name="q" placeholder="Search" type="text" />
-                        <span class="input-group-btn">
-                            <button class="btn btn-default" type="button"><i class="glyphicon glyphicon-search"></i></button>
-                        </span>
+            <hr>
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-"></div>
+                </div>
+            </div>
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-9">
+                        <div class="post">
+                            <div style="box-shadow: 0px 0px 0px 0px rgba(34, 34, 34, 0.15),inset 0px -4px 0px 0px #D7351C !important; height:53px; width:50px; border-radius:5px; margin-right:15px;" class="pull-left">
+                                <div class="post-thumb pull-left" style="width:50px;">
+                                    <a class="post-thumb" href="/squawks/58" style=""><img alt="Missing" class="img-rounded" src="photos/graffiti/missing.png"></a>
+                                </div>
+                            </div>
+                            <div class="post-content pull-left">
+                                <div style="font-weight:bold; font-size:18px;">
+                                    <a href="/squawks/58">Setting goals is the first step in turning the invisible into the visible.</a>
+                                </div>
+                                <p class="text-muted">
+                                    Posted by <a href="/profile/pappgergely" style="color:#000; text-decoration:none;">pappgergely</a> 4 days ago
+                                </p>
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="clearfix">
+                            <br>
+                        </div>
+                        <div id="footer">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <p class="text-muted pull-right">
+                                            <a href="/">Home</a> | <a href="/terms">Terms</a> | <a href="/about">About</a> | <a href="http://www.cloudflare.com/email-protection#690a06071d080a1d291a181c081e02081b470a0604">Contact</a>
+                                        </p>
+                                        <p class="pull-left">
+                                            © 2014 <a href="/">Squawkar</a>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <br>
-</form>                <ul class="nav nav-pills nav-stacked">
-        <li class="active"><a href="/">All</a></li>
-
-        <li><a href="/category/news">News</a></li>
-
-        <li><a href="/category/politics">Politics</a></li>
-
-        <li><a href="/category/sport">Sport</a></li>
-
-        <li><a href="/category/entertainment">Entertainment &amp; Arts</a></li>
-
-        <li><a href="/category/funny">Witty and Weird</a></li>
-
-        <li><a href="/category/technologyenvironment">Technology &amp; Environment</a></li>
-
-</ul>
-            </div>
-        </div>
-
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="text-center">
-                <ul class="pagination pagination"><li class="prev disabled"><span>&#8592; Previous</span></li> <li class="active"><span>1</span></li> <li><a rel="next" href="/?page=2">2</a></li> <li><a href="/?page=3">3</a></li> <li class="next"><a rel="next" href="/?page=2">Next &#8594;</a></li></ul>
-            </div>
-        </div>
-    </div>
-</div>
-    </div>
-
-    <div class="clearfix"><br></div>
-
-    <div id="footer">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <p class="text-muted pull-right">
-                        <a href="/">Home</a> |
-                        <a href="/terms">Terms</a> |
-                        <a href="/about">About</a> |
-                        <a href="http://www.cloudflare.com/email-protection#690a06071d080a1d291a181c081e02081b470a0604">Contact</a>
-                    </p>
-                    <p class="pull-left">&copy; 2014 <a href="/">Squawkar</a></p>
                 </div>
             </div>
         </div>
-    </div>
-<script type="text/javascript">
-/* <![CDATA[ */
-(function(){try{var s,a,i,j,r,c,l=document.getElementsByTagName("a"),t=document.createElement("textarea");for(i=0;l.length-i;i++){try{a=l[i].getAttribute("href");if(a&&"www.cloudflare.com/email-protection"==a.substr(7 ,35)){s='';j=43;r=parseInt(a.substr(j,2),16);for(j+=2;a.length-j&&a.substr(j,1)!='X';j+=2){c=parseInt(a.substr(j,2),16)^r;s+=String.fromCharCode(c);}j+=1;s+=a.substr(j,a.length-j);t.innerHTML=s.replace(/</g,"&lt;").replace(/>/g,"&gt;");l[i].setAttribute("href","mailto:"+t.value);}}catch(e){}}}catch(e){}})();
-/* ]]> */
-</script>
-</body>
+        <script type="text/javascript">
+            //$.support.cors=true;
+
+            var url = 'http://aurettoworks.com/squawkar/ajax.php';
+
+            $.ajax({
+                type: 'GET',
+                url: url,
+                data: {posts: 'value1'},
+                contentType: "application/json",
+                dataType: 'jsonp',
+                jsonp: "callback",
+                crossDomain: true,
+                success: function(res) {
+                 console.log(res);
+                },
+                error: function(res) {
+                  console.log(res);
+                }
+            });
+        </script>
+    </body>
 </html>
