@@ -47,3 +47,34 @@ var app = {
         console.log('Received Event: ' + id);
     }
 };
+
+
+function addPost(data) {
+
+    $.each(data, function(index, val) {
+        var post = '<div class="post"><div style="box-shadow: 0px 0px 0px 0px rgba(34, 34, 34, 0.15),inset 0px -4px 0px 0px #D7351C !important; height:53px; width:50px; border-radius:5px; margin-right:15px;" class="pull-left"><div class="post-thumb pull-left" style="width:50px;"><a class="post-thumb" href="' + data[index].link + '"><img alt="Missing" class="img-rounded" src="photos/graffiti/missing.png"></a></div></div><div class="post-content pull-left"><div style="font-weight:bold; font-size:18px;"><a href="' + data[index].link + '">' + data[index].content + '</a></div><p class="text-muted">Posted by <a href="' + data[index].postedBy.link + '" style="color:#000; text-decoration:none;">' + data[index].postedBy.name + '</a> ' + data[index].date + '</p></div><div class="clearfix"></div></div>';
+        $('#add-post').prepend(post);
+    });
+
+}
+
+function getData(data) {
+    var url = 'http://aurettoworks.com/squawkar/ajax.php';
+    var ret;
+
+    $.ajax({
+        type: 'GET',
+        url: url,
+        data: data,
+        contentType: "application/json",
+        dataType: 'jsonp',
+        jsonp: "callback",
+        crossDomain: true,
+        success: function(res) {
+            addPost(res);
+        },
+        error: function(res) {
+            $('#add-post').prepend('error');
+        }
+    });
+}

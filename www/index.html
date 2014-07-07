@@ -84,23 +84,8 @@
             </div>
             <div class="container">
                 <div class="row">
-                    <div class="col-lg-9">
-                        <div class="post">
-                            <div style="box-shadow: 0px 0px 0px 0px rgba(34, 34, 34, 0.15),inset 0px -4px 0px 0px #D7351C !important; height:53px; width:50px; border-radius:5px; margin-right:15px;" class="pull-left">
-                                <div class="post-thumb pull-left" style="width:50px;">
-                                    <a class="post-thumb" href="/squawks/58" style=""><img alt="Missing" class="img-rounded" src="photos/graffiti/missing.png"></a>
-                                </div>
-                            </div>
-                            <div class="post-content pull-left">
-                                <div style="font-weight:bold; font-size:18px;">
-                                    <a href="/squawks/58">Setting goals is the first step in turning the invisible into the visible.</a>
-                                </div>
-                                <p class="text-muted">
-                                    Posted by <a href="/profile/pappgergely" style="color:#000; text-decoration:none;">pappgergely</a> 4 days ago
-                                </p>
-                            </div>
-                            <div class="clearfix"></div>
-                        </div>
+                    <div class="col-lg-9" id="add-post">
+                        
                         <div class="clearfix">
                             <br>
                         </div>
@@ -125,23 +110,7 @@
         <script type="text/javascript">
             //$.support.cors=true;
 
-            var url = 'http://aurettoworks.com/squawkar/ajax.php';
-
-            $.ajax({
-                type: 'GET',
-                url: url,
-                data: {posts: 'value1'},
-                contentType: "application/json",
-                dataType: 'jsonp',
-                jsonp: "callback",
-                crossDomain: true,
-                success: function(res) {
-                 console.log(res);
-                },
-                error: function(res) {
-                  console.log(res);
-                }
-            });
+           getData({'posts': 'all'});
         </script>
     </body>
 </html>
