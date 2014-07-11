@@ -52,7 +52,11 @@ var app = {
 function addPost(data) {
 
     $.each(data, function(index, val) {
-        var post = '<div class="post" style="margin-left:-1000px"><div style="box-shadow: 0px 0px 0px 0px rgba(34, 34, 34, 0.15),inset 0px -4px 0px 0px #D7351C !important; height:53px; width:50px; border-radius:5px; margin-right:15px;" class="pull-left"><div class="post-thumb pull-left" style="width:50px;"><a class="post-thumb" href="' + data[index].link + '"><img alt="Missing" class="img-rounded" src="photos/graffiti/missing.png"></a></div></div><div class="post-content pull-left"><div style="font-weight:bold; font-size:18px;"><a href="' + data[index].link + '">' + data[index].content + '</a></div><p class="text-muted">Posted by <a href="' + data[index].postedBy.link + '" style="color:#000; text-decoration:none;">' + data[index].postedBy.name + '</a> ' + data[index].date + '</p></div><div class="clearfix"></div></div>';
+        var thumb;
+        if (data[index].isGraffiti == "true") thumb = 'text';
+        else thumb = 'graffiti';
+        console.log(data[index].isGraffiti);
+        var post = '<div class="post" style="margin-left:-1000px"><div style="box-shadow: 0px 0px 0px 0px rgba(34, 34, 34, 0.15),inset 0px -4px 0px 0px #D7351C !important; height:53px; width:50px; border-radius:5px; margin-right:15px;" class="pull-left"><div class="post-thumb pull-left" style="width:50px;"><a class="post-thumb" href="' + data[index].link + '"><img alt="Missing" class="img-rounded" src="photos/' + thumb + '/missing.png"></a></div></div><div class="post-content pull-left"><div style="font-weight:bold; font-size:18px;"><a href="' + data[index].link + '">' + data[index].content + '</a></div><p class="text-muted">Posted by <a href="' + data[index].postedBy.link + '" style="color:#000; text-decoration:none;">' + data[index].postedBy.name + '</a> ' + data[index].date + '</p></div><div class="clearfix"></div></div>';
         $('#add-post').prepend(post);
     });
     animateIn();
@@ -64,7 +68,11 @@ function animateIn() {
         $(el).animate({
             marginLeft: 0
         }, {
-            duration: 1000 + index * 1000
+            duration: 1000 + index * 1000,
+            complete: function() {
+                $(el).width($(el).width());
+                $(el).children('.post-content').css('max-width', $(el).width() - 65);
+            }
         });
     });
 }
