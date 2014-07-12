@@ -7827,7 +7827,7 @@ html, body {
 .graffiti-text {
     padding: 20px;
     margin-bottom: 20px;
-    background: url("/bg.png");
+    background: url("../bg.png");
     background-size: cover;
     border-radius: 4px;
     text-align: center;

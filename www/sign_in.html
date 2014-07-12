@@ -21,48 +21,51 @@
 -->
 <html>
     <head>
-        <meta charset="utf-8" />
-        <meta name="format-detection" content="telephone=no" />
-        <meta name="msapplication-tap-highlight" content="no" />
-        <!-- WARNING: for iOS 7, remove the width=device-width and height=device-height attributes. See https://issues.apache.org/jira/browse/CB-4323 -->
-        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
-        <script type="text/javascript" src="cordova.js"></script>
-        <script type="text/javascript" src="js/index.js"></script>
+        <meta charset="utf-8">
+        <meta name="format-detection" content="telephone=no">
+        <meta name="msapplication-tap-highlight" content="no"><!-- WARNING: for iOS 7, remove the width=device-width and height=device-height attributes. See https://issues.apache.org/jira/browse/CB-4323 -->
+        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height">
+        <!--<script type="text/javascript" src="cordova.js"></script>-->
         <script type="text/javascript" src="js/jquery.js"></script>
-        <script type="text/javascript" src="//use.typekit.net/myv1nls.js"></script>
-        <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
-        <link rel="stylesheet" type="text/css" href="css/index.css" />
-        <title>Hello World</title>
+        <script type="text/javascript" src="js/index.js"></script>
+        <script type="text/javascript" src="http://use.typekit.net/myv1nls.js"></script>
+        <script type="text/javascript">
+            try{Typekit.load();}catch(e){}
+        </script>
+        <link rel="stylesheet" type="text/css" href="css/index.css">
+        <title>
+            SQUAWKAR
+        </title>
     </head>
 <body>
-	<div id="wrap">
-		<nav class="navbar navbar-static navbar-default" role="navigation">
-		<div class="container">
-			<div class="navbar-header">
-				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-					<span class="sr-only">Toggle navigation</span>
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span>
-				</button>
-				<a href="/" class="navbar-brand">
-					<img src="/logo.png" style="height:55px; width:55px;;" class="pull-left">
-					<div style="font-size:30px; font-family: 'futura-pt', sans-serif; padding-top:18px; padding-left:10px;" class="pull-left">SQUAWKAR</div>
-				</a>
-			</div>
-			<div class="navbar-collapse collapse">
-					<ul class="nav navbar-nav navbar-right">
-						<li>
-							<a href="/users/sign_up">Register</a>
-						</li>
-						<li>
-							<a href="/users/sign_in">Login</a>
-						</li>
-					</ul>
-			</div>
-		</div>
-		</nav>
-		<div class="center-banner text-center">
+    <div id="wrap">
+        <nav class="navbar navbar-static navbar-default" role="navigation">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a href="/" class="navbar-brand">
+                    <img src="/logo.png" style="height:55px; width:55px;;" class="pull-left">
+                    <div style="font-size:30px; font-family: 'futura-pt', sans-serif; padding-top:18px; padding-left:10px;" class="pull-left">SQUAWKAR</div>
+                </a>
+            </div>
+           <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>
+                            <a href="sign_up.html">Register</a>
+                        </li>
+                        <li>
+                            <a href="sign_in.html">Login</a>
+                        </li>
+                    </ul>
+            </div>
+        </div>
+        </nav>
+        <div class="center-banner text-center">
     <div class="container">
         <h3>Login</h3>
     </div>
@@ -74,53 +77,49 @@
         <div class="col-md-6 col-md-offset-3">
             <div class="panel panel-default">
                 <div class="panel-body">
-                    <form accept-charset="UTF-8" action="/users/sign_in" class="new_user" id="new_user" method="post"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="&#x2713;" /><input name="authenticity_token" type="hidden" value="3JnCt7n5Cv8Ek8fILc9scIIHn9mxri46wEZA9C7JbY0=" /></div>
+                    <form accept-charset="UTF-8" action="/users/sign_in" class="new_user" id="new_user" method="post"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="✓"><input name="authenticity_token" type="hidden" value="3JnCt7n5Cv8Ek8fILc9scIIHn9mxri46wEZA9C7JbY0="></div>
                         <div class="form-group input-group-lg">
                             <a class="pull-right orange-link" href="/users/sign_up">Create an account</a>
                             <label for="user_login">Username or Email</label>
-                            <input autofocus="autofocus" class="form-control" id="user_login" name="user[login]" type="text" />
+                            <input autofocus="autofocus" class="form-control" id="user_login" name="user[login]" type="text">
                         </div>
 
                         <div class="form-group input-group-lg">
                             <a class="pull-right orange-link" href="/users/password/new">Forgot Password?</a>
                             <label for="user_password">Password</label>
-                            <input class="form-control" id="user_password" name="user[password]" type="password" />
+                            <input class="form-control" id="user_password" name="user[password]" type="password">
                         </div>
 
-                        <input class="btn btn-wi btn-lg btn-block" name="commit" type="submit" value="Sign In" />
+                        <input class="btn btn-wi btn-lg btn-block" name="commit" type="submit" value="Sign In">
 </form>                </div>
             </div>
-            <div class="text-center">
-                <h3>Or</h3>
-            </div>
-            <a class="btn btn-facebook btn-block btn-lg" href="/users/auth/facebook">Sign in with Facebook</a>
-            <a class="btn btn-twitter btn-block btn-lg" href="/users/auth/twitter">Sign in with Twitter</a>
         </div>
     </div>
 </div>
-	</div>
+    </div>
 
-	<div class="clearfix"><br></div>
+    <div class="clearfix"><br></div>
 
-	<div id="footer">
-		<div class="container">
-			<div class="row">
-				<div class="col-lg-12">
-					<p class="text-muted pull-right">
-						<a href="/">Home</a> |
-						<a href="/terms">Terms</a> |
-						<a href="/about">About</a> |
-						<a href="http://www.cloudflare.com/email-protection#5d3e3233293c3e291d2e2c283c2a363c2f733e3230">Contact</a>
-					</p>
-					<p class="pull-left">&copy; 2014 <a href="/">Squawkar</a></p>
-				</div>
-			</div>
-		</div>
-	</div>
+    <div id="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <p class="text-muted pull-right">
+                        <a href="index.html">Home</a> |
+                        <a href="terms.html">Terms</a> |
+                        <a href="about.html">About</a> |
+                        <a href="mailto:contact@squawkar.com">Contact</a>
+                    </p>
+                    <p class="pull-left">© 2014 <a href="/">Squawkar</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
 <script type="text/javascript">
 /* <![CDATA[ */
 (function(){try{var s,a,i,j,r,c,l=document.getElementsByTagName("a"),t=document.createElement("textarea");for(i=0;l.length-i;i++){try{a=l[i].getAttribute("href");if(a&&"www.cloudflare.com/email-protection"==a.substr(7 ,35)){s='';j=43;r=parseInt(a.substr(j,2),16);for(j+=2;a.length-j&&a.substr(j,1)!='X';j+=2){c=parseInt(a.substr(j,2),16)^r;s+=String.fromCharCode(c);}j+=1;s+=a.substr(j,a.length-j);t.innerHTML=s.replace(/</g,"&lt;").replace(/>/g,"&gt;");l[i].setAttribute("href","mailto:"+t.value);}}catch(e){}}}catch(e){}})();
 /* ]]> */
 </script>
+
 </body>
 </html>
