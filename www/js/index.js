@@ -48,37 +48,45 @@ var app = {
     }
 };
 
+var post;
 
 function addPost(data) {
 
-    $.each(data, function(index, val) {
-        var thumb;
-        if (data[index].isGraffiti == "true") thumb = 'text';
-        else thumb = 'graffiti';
-        console.log(data[index].isGraffiti);
-        var post = '<div class="post" style="margin-left:-1000px"><div style="box-shadow: 0px 0px 0px 0px rgba(34, 34, 34, 0.15),inset 0px -4px 0px 0px #D7351C !important; height:53px; width:50px; border-radius:5px; margin-right:15px;" class="pull-left"><div class="post-thumb pull-left" style="width:50px;"><a class="post-thumb" href="' + data[index].link + '"><img alt="Missing" class="img-rounded" src="photos/' + thumb + '/missing.png"></a></div></div><div class="post-content pull-left"><div style="font-weight:bold; font-size:18px;"><a href="' + data[index].link + '">' + data[index].content + '</a></div><p class="text-muted">Posted by <a href="' + data[index].postedBy.link + '" style="color:#000; text-decoration:none;">' + data[index].postedBy.name + '</a> ' + data[index].date + '</p></div><div class="clearfix"></div></div>';
-        $('#add-post').prepend(post);
-    });
-    animateIn();
+    if (data.length == 0) {
+        $('#add-post').prepend('<h1 class="text-center post">No Squawks Found</h1>');
+    } else {
+
+        $.each(data.reverse(), function(index, val) {
+            var thumb, content;
+            if (data[index].format != "graffiti") {
+                thumb = 'text';
+            } else {
+                thumb = 'graffiti';
+            }
+            post = '<div class="post transfromOut"><div style="box-shadow: 0px 0px 0px 0px rgba(34, 34, 34, 0.15),inset 0px -4px 0px 0px #D7351C !important; height:53px; width:50px; border-radius:5px; margin-right:15px;" class="pull-left"><div class="post-thumb pull-left" style="width:50px;"><a class="post-thumb toSingle" data-id="' + data[index].id + '" href="single.html"><img alt="Missing" class="img-rounded" src="photos/' + thumb + '/missing.png"></a></div></div><div class="post-content pull-left"><div style="font-weight:bold; font-size:18px;"><a class="toSingle" data-id="' + data[index].id + '" href="single.html">' + data[index].title + '</a></div><p class="text-muted">Posted by <a href="' + data[index].user_id + '" style="color:#000; text-decoration:none;">' + '---' + '</a> ' + dateDiffInDays(data[index].created_at) + '</p></div><div class="clearfix"></div></div>';
+            $('#add-post').prepend(post);
+        });
+        setTimeout(animateIn, 1000);
+    }
 }
 
 function animateIn() {
     var postsToHide = $('.post');
     postsToHide.each(function(index, el) {
-        $(el).animate({
-            marginLeft: 0
-        }, {
-            duration: 1000 + index * 1000,
-            complete: function() {
-                $(el).width($(el).width());
-                $(el).children('.post-content').css('max-width', $(el).width() - 65);
-            }
-        });
+        setTimeout(function() {
+            $(el).addClass('has-transition').removeClass('transfromOut');
+        }, 50 * index);
     });
 }
 
+function toSingle() {
+    event.preventDefault();
+    window.localStorage.setItem("id", $(this).data("id"));
+    window.location = 'single.html';
+}
+
 function getData(data) {
-    var url = 'http://aurettoworks.com/squawkar/ajax.php';
+    var url = 'http://squawkar.herokuapp.com/api/v1/' + data;
     var ret;
 
     $.ajax({
@@ -91,6 +99,7 @@ function getData(data) {
         crossDomain: true,
         success: function(res) {
             addPost(res);
+            $('.toSingle').bind('click', toSingle);
         },
         error: function(res) {
             $('#add-post').prepend('error');
@@ -98,32 +107,123 @@ function getData(data) {
     });
 }
 
+
+function addSingleData(data) {
+
+    if (data.squawk.format == 'graffiti') {
+        var text = '<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12"><div class="graffiti-text"><h1>' + data.squawk.graffiti_text + '</h1></div></div>';
+    } else {
+        var title = '<div class="row"><div class="col-xs-12 col-sm-12 col-md-12 col-lg-12"><h2 style="color:#000; font-family: proxima-nova, sans-serif; font-size: 30px; font-weight: bold;">' + data.squawk.title + '</h2></div></div>';
+        var text = '<div class="row"><div class="col-xs-12 col-sm-12 col-md-12 col-lg-12"><div style="padding-bottom:20px;"><p></p><p>' + data.squawk.description + '</p><p></p></div></div></div>';
+        text = title + text;
+    }
+
+    var authorData = '<a href="/profile/pappgergely" style="text-decoration:none;"><img alt="Missing" class="img-rounded" src="img/missing.png"></a> <strong style="font-size:20px; margin-left:5px;"><a href="/profile/pappgergely" style="color:#000; text-decoration:none;">pappgergely</a></strong> - <strong syle="font-size:18px; font-weight:normal;">Posted ' + dateDiffInDays(data.squawk.created_at) + '</strong>';
+    $('#text').html(text);
+    $('#author-data').html(authorData);
+
+    if (data.comments.length < 0) {
+        $.each(data.comments, function(index, val) {
+            var comment = '<div class="media"><a class="pull-left" href="/profile/pmoney" style="text-decoration:none;"><img alt="Missing" class="img-rounded media-object" src="img/missing.png"></a><div class="media-body"><h4 class="media-heading" style="font-size:14px;">Posted by <a href="/profile/pmoney">PMoney</a>Posted ' + dateDiffInDays(val.created_at) + '<span>-</span> <span class="pull-right">0 Likes | 0 Dislikes</span></h4><p>' + val.message + '</p></div></div>';
+            $('#comments').append(comment);
+        });
+    } else {
+        $('#comments h3').remove();
+        $('#comments').html('<br><h1 class="text-center">No Comments</h1>');
+    }
+
+
+}
+
+function getSingle() {
+    var url = 'http://squawkar.herokuapp.com/api/v1/squawks/' + window.localStorage.getItem('id');
+    var ret;
+
+    $.ajax({
+        type: 'GET',
+        url: url,
+        contentType: "application/json",
+        dataType: 'jsonp',
+        jsonp: "callback",
+        crossDomain: true,
+        success: function(res) {
+            addSingleData(res);
+            console.log(res);
+        },
+        error: function(res) {
+            $('#add-post').prepend('error');
+        }
+    });
+}
+
+var _MS_PER_DAY = 1000 * 60 * 60 * 24;
+
+// a and b are javascript Date objects
+function dateDiffInDays(postDate) {
+    // Discard the time and time-zone information.
+    var ret;
+    var now = new Date();
+    postDate = new Date(postDate);
+
+
+    var utc1 = Date.UTC(now.getFullYear(), now.getMonth(), now.getDate());
+    var utc2 = Date.UTC(postDate.getFullYear(), postDate.getMonth(), postDate.getDate());
+
+    ret = Math.floor((utc2 - utc1) / _MS_PER_DAY);
+
+    if (Math.abs(ret) >= 365) return Math.ceil(Math.abs(ret) / 365) + ' years ago';
+    else if (Math.abs(ret) >= 30) return Math.ceil(Math.abs(ret) / 30) + ' months ago';
+    else return ret + ' days ago';
+
+}
+
+var filter = 'squawks';
+
 jQuery(document).ready(function() {
 
-    getData({
-        'posts': 'all'
-    });
-
+    getData('squawks');
 
     $('.nav-pills a').click(function(event) {
         event.preventDefault();
         var postsToHide = $('.post');
-        var filter = $(this).attr('id');
+        filter = $(this).data('link');
+
+        $(this).parent().siblings('li').removeClass('active');
+        $(this).parent().addClass('active');
 
         postsToHide.each(function(index, el) {
-            $(el).animate({
-                marginLeft: -$(el).width() + 100
-            }, {
-                complete: function() {
-                    $(this).remove();
-                    if (postsToHide.length = index) {
-                        getData({
-                            'posts': filter
-                        });
-                    }
-                },
-                duration: 1000 + index * 1000
-            });
+            setTimeout(function() {
+                $(el).addClass('transfromOut');
+            }, 50 * index);
+            setTimeout(function() {
+                $('.post').remove();
+                if (postsToHide.length == index + 1) {
+                    getData(filter);
+                }
+            }, 2100);
         });
     });
+
+    $(".pagination li a").click(function() {
+        event.preventDefault();
+        var postsToHide = $('.post');
+
+        $(this).parent().siblings('li').removeClass('active');
+        $(this).parent().addClass('active');
+
+        var page = $(this).attr('href');
+
+        postsToHide.each(function(index, el) {
+            setTimeout(function() {
+                $(el).addClass('transfromOut');
+            }, 50 * index);
+            setTimeout(function() {
+                $(this).remove();
+                if (postsToHide.length == index + 1) {
+                    getData(filter + page);
+                }
+            }, 2100);
+        });
+    });
+
 });
