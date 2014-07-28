@@ -40,7 +40,7 @@
     </head>
 <body>
 <div id="wrap">
-    <nav class="navbar navbar-static navbar-default" role="navigation">
+        <nav class="navbar navbar-static navbar-default" role="navigation">
         <div class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -68,79 +68,63 @@
             </div>
         </div>
     </nav>
+<div class="header">
     <div class="container">
-        <div class="row">
-            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                <ul class="nav nav-pills">
-                    <li class="active">
-                        <a href="/" id="all">Latest</a>
-                    </li>
-                    <li>
-                        <a href="/" id="popular">Popular</a>
-                    </li>
-                    <li>
-                        <a href="/" id="commented">Most Commented</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
+        <h1>Text</h1>
     </div>
-    <hr>
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-"></div>
-        </div>
-    </div>
-    <div class="container">
-        <div class="row">
-            <div id="add-post" class="col-lg-9">
-                
-            </div>
-            <div class="col-lg-3">
-                <form accept-charset="UTF-8" action="/search" method="get" id="search">
-                    <div style="margin:0;padding:0;display:inline">
-                        <input name="utf8" type="hidden" value="✓">
-                    </div>
-                    <div class="input-group input-group-lg">
-                        <input class="form-control" id="q" name="q" placeholder="Search" type="text">
-                    </div><br>
-                </form>
-                <ul class="nav nav-pills nav-stacked">
-                    <li class="active">
-                        <a href="index.html" data-link="squawks">All</a>
-                    </li>
-                    <li>
-                        <a href="/" data-link="category/news" id="news">News</a>
-                    </li>
-                    <li>
-                        <a href="/" data-link="category/politics" id="politics">Politics</a>
-                    </li>
-                    <li>
-                        <a href="/" data-link="category/sport" id="sport">Sport</a>
-                    </li>
-                    <li>
-                        <a href="/" data-link="category/entertainment" id="entertainment">Entertainment &amp; Arts</a>
-                    </li>
-                    <li>
-                        <a href="/" data-link="category/funny" id="funny">Witty and Weird</a>
-                    </li>
-                    <li>
-                        <a href="/" data-link="category/technologyenvironment" id="technologyenvironment">Technology &amp; Environment</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="text-center">
-                    <ul class="pagination">
-                        
-                    </ul>
-                </div>
-            </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <ul class="nav nav-pills">
+                <li class="active"><a href="new.html">Text</a></li>
+                <!-- <li><a href="/squawk/new/image">Image</a></li> -->
+                <li><a href="graffiti.html">Graffiti</a></li>
+            </ul>
         </div>
     </div>
 </div>
+
+<hr>
+
+<div class="container">
+    <form accept-charset="UTF-8" action="/squawks" class="new_squawk" id="new_squawk" method="post"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="✓"><input name="authenticity_token" type="hidden" value="3JnCt7n5Cv8Ek8fILc9scIIHn9mxri46wEZA9C7JbY0="></div>
+
+
+    <div class="form-group input-group-lg">
+      <label for="squawk_title">Title</label>
+      <input class="form-control" id="squawk_title" name="squawk[title]" type="text">
+    </div>
+
+    <div class="form-group input-group-lg">
+      <label for="squawk_description">Message</label>
+      <textarea class="form-control" id="squawk_description" name="squawk[description]" style="height:140px;"></textarea>
+    </div>
+
+
+  <div class="form-group input-group-lg">
+    <label for="squawk_category">Category</label>
+    <input class="form-control" id="squawk_category" name="squawk[category]" type="text">
+
+    <div style="margin-top:10px;">
+      <a href="#" style="color:#FF5200; font-weight:bold; margin-right:5px;" data-category="news" class="category-button">News</a>
+      <a href="#" style="color:#FF5200; font-weight:bold; margin-right:5px;" data-category="politics" class="category-button">Politics</a>
+      <a href="#" style="color:#FF5200; font-weight:bold; margin-right:5px;" data-category="sport" class="category-button">Sport</a>
+      <a href="#" style="color:#FF5200; font-weight:bold; margin-right:5px;" data-category="entertainment" class="category-button">Entertainment</a>
+      <a href="#" style="color:#FF5200; font-weight:bold; margin-right:5px;" data-category="funny" class="category-button">Witty and Weird</a>
+      <a href="#" style="color:#FF5200; font-weight:bold; margin-right:5px;" data-category="technologyenvironment" class="category-button">Technology &amp; Environment</a>
+    </div>
+  </div>
+
+  <input id="squawk_format" name="squawk[format]" type="hidden" value="text">
+
+  <div class="actions">
+    <input id="add-new" class="btn btn-lg btn-wi" name="commit" type="submit" value="Squawk">
+  </div>
+</form>
+</div>
+    </div>
 <div class="clearfix">
     <br>
 </div>

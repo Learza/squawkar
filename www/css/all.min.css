@@ -4222,7 +4222,10 @@ button.close {
 }
 .pull-left {
     float: left !important;
+    /*width: 80%;*/
 }
+
+.navbar-brand div.pull-left{width:auto;}
 .hide {
     display: none !important;
 }
