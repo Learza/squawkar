@@ -8687,3 +8687,10 @@ p {
     background-position: 100% -21px !important;
 }
 }
+.post-content { width: 80%; }
+@media (max-width:360px) {
+    .post-content { width: 70%; }
+    .post-content a, .post-content p { font-size: 16px; }
+    .navbar-brand div { font-size: 28px !important; }
+    .nav-pills li a { font-size: 13px !important; }
+}
