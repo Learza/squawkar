@@ -58,9 +58,6 @@ var user_token;
 
 function addPost(data) {
 
-
-    console.log(data);
-
     if (data.length == 0) {
         $('#add-post').prepend('<h1 class="text-center post">No Squawks Found</h1>');
     } else {
@@ -142,15 +139,15 @@ function addSingleData(data) {
         text = title + text;
     }
 
-    var authorData = '<a href="/profile/pappgergely" style="text-decoration:none;"><img alt="Missing" class="img-rounded" src="img/missing.png"></a> <strong style="font-size:20px; margin-left:5px;"><a href="/profile/pappgergely" style="color:#000; text-decoration:none;">pappgergely</a></strong> - <strong syle="font-size:18px; font-weight:normal;">Posted ' + dateDiffInDays(data.squawk.created_at) + '</strong>';
+    var authorData = '<a href="/profile/' + data.userdata[0].username + '" style="text-decoration:none;"><img alt="Missing" class="img-rounded" src="img/missing.png"></a> <strong style="font-size:20px; margin-left:5px;"><a href="/profile/' + data.userdata[0].username + '" style="color:#000; text-decoration:none;">' + data.userdata[0].username + '</a></strong> - <strong syle="font-size:18px; font-weight:normal;">Posted ' + dateDiffInDays(data.squawk.created_at) + '</strong>';
     $('#text').html(text);
     $('#author-data').html(authorData);
 
     if (data.comments.length > 0) {
         $.each(data.comments, function(index, val) {
             if (window.localStorage.getItem('user_token') != -1) {
-                var like = '<a href="" class="like" onclick="like(\'like\',' + window.localStorage.getItem("id") + ',' + data.comments[index].id + ';return false;")>Like </a>(' + data.votes[index].upvotes + ')';
-                var unlike = '<a href="" class="like" onclick="like(\'dislike\',' + window.localStorage.getItem("id") + ',' + data.comments[index].id + ';return false;")">Dislike </a>(' + data.votes[index].downvotes + ')';
+                var like = '<a href="" class="like" onclick="like(\'like\',' + window.localStorage.getItem("id") + ',' + data.comments[index].id + ');return false;">Like </a>(' + data.votes[index].upvotes + ')';
+                var unlike = '<a href="" class="like" onclick="like(\'dislike\',' + window.localStorage.getItem("id") + ',' + data.comments[index].id + ');return false;">Dislike </a>(' + data.votes[index].downvotes + ')';
             } else {
                 var like = data.votes[index].upvotes + ' Likes';
                 var unlike = data.votes[index].downvotes + 'Dislikes';
@@ -204,7 +201,7 @@ function dateDiffInDays(postDate) {
 
     if (Math.abs(ret) >= 365) return Math.ceil(Math.abs(ret) / 365) + ' years ago';
     else if (Math.abs(ret) >= 30) return Math.ceil(Math.abs(ret) / 30) + ' months ago';
-    else return ret + ' days ago';
+    else return Math.abs(ret) + ' days ago';
 
 }
 
@@ -212,11 +209,13 @@ function createPost(title, description, category, format) {
 
     if (window.localStorage.getItem('user_token') == -1) return false;
 
-    if (title.length < 5 || title.length >= 90) return 'title_error';
+    if (format == 'text' && (title.length < 5 || title.length >= 90)) return 'title_error';
+
     else if (description.length > 200) return 'description_error';
     else if (category.length < 1 || category.length >= 20) return 'category_error';
 
     var url = 'http://squawkar.herokuapp.com/api/v1/squawks/new?user_token=' + window.localStorage.getItem('user_token');
+
 
     $.ajax({
         type: 'GET',
@@ -287,15 +286,14 @@ function addComment(postId, comment, isGraffiti) {
                 message: comment
             },
             commit: 'Create'
-        }
+        },
     })
         .done(function(res) {
-            console.log(res);
+            location.reload();
         })
         .fail(function(res) {
             console.log("error");
         });
-
 
 }
 
@@ -346,10 +344,10 @@ function like(action, postId, commentId) {
         jsonp: "callback",
         crossDomain: true,
         success: function(res) {
-            console.log(res);
+            location.reload();
         },
         error: function(res) {
-            console.log(error);
+            console.log(res);
         }
     });
 }
@@ -403,11 +401,17 @@ jQuery(document).ready(function() {
         window.localStorage.setItem("user_token", '-1');
 
     if (window.localStorage.getItem('user_token') != -1) {
-        var navbar = '<li><a class="new-squawk-button" href="new.html">Squawk</a></li><li><a href="/notifications">Notifications</a></li><li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"> ' + window.localStorage.getItem('user_name') + ' <b class="caret"></b> </a> <ul class="dropdown-menu"> <li><a href="/profile/' + window.localStorage.getItem('user_name') + '">Profile</a></li> <li><a href="/following">Following</a></li> <li><a href="/users/edit">Settings</a></li> <li class="divider"></li> <li><a data-method="delete" href="/users/sign_out" rel="nofollow">Logout</a></li> </ul> </li>';
+        var navbar = '<li><a class="new-squawk-button" href="new.html">Squawk</a></li><li><a href="/notifications">Notifications</a></li><li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"> ' + window.localStorage.getItem('user_name') + ' <b class="caret"></b> </a> <ul class="dropdown-menu"> <li><a href="/profile/' + window.localStorage.getItem('user_name') + '">Profile</a></li> <li><a href="/following">Following</a></li> <li><a href="/users/edit">Settings</a></li> <li class="divider"></li> <li><a id="logout" data-method="delete" href="/users/sign_out" rel="nofollow">Logout</a></li> </ul> </li>';
         $('.navbar-right').html(navbar);
     }
 
+
     getData('squawks');
+
+
+    $('.category-button').click(function() {
+        $('#squawk_category').val($(this).data('category'));
+    });
 
 
     $('#search').submit(function(e) {
@@ -478,12 +482,18 @@ jQuery(document).ready(function() {
 
     });
 
+    $('#logout').click(function(event) {
+        event.preventDefault();
+        window.localStorage.setItem("user_token", '-1');
+        window.location = 'index.html';
+    });
+
     $("#add-new").click(function(e) {
         e.preventDefault();
         var title = $('#squawk_title').val();
-        var description = $('#squawk_description').val();
+        var description = ($(this).hasClass('graffiti')) ? $('#squawk_graffiti_text').val() : $('#squawk_description').val();
         var category = $('#squawk_category').val();
-        var format = "text";
+        var format = ($(this).hasClass('graffiti')) ? 'graffiti' : 'text';
 
         var response = createPost(title, description, category, format);
 
