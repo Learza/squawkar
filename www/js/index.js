@@ -79,11 +79,68 @@ function addPost(data) {
             } else {
                 thumb = 'graffiti';
             }
-            post = '<div class="post transfromOut"><div style="box-shadow: 0px 0px 0px 0px rgba(34, 34, 34, 0.15),inset 0px -4px 0px 0px #D7351C !important; height:53px; width:50px; border-radius:5px; margin-right:15px;" class="pull-left"><div class="post-thumb pull-left" style="width:50px;"><a class="post-thumb toSingle" data-id="' + data.posts[index].id + '" href="single.html"><img alt="Missing" class="img-rounded" src="photos/' + thumb + '/missing.png"></a></div></div><div class="post-content pull-left"><div style="font-weight:bold; font-size:18px"><a class="toSingle" data-id="' + data.posts[index].id + '" href="single.html">' + data.posts[index].title + '</a></div><p class="text-muted">Posted by <a href="' + data.posts[index].user_id + '" style="color:#000; text-decoration:none;">' + userData[index].username + '</a> ' + dateDiffInDays(data.posts[index].created_at) + '</p></div><div class="clearfix"></div></div>';
+            post = '<div class="post transfromOut"><div style="box-shadow: 0px 0px 0px 0px rgba(34, 34, 34, 0.15),inset 0px -4px 0px 0px #D7351C !important; height:53px; width:50px; border-radius:5px; margin-right:15px;" class="pull-left"><div class="post-thumb pull-left" style="width:50px;"><a class="post-thumb toSingle" data-id="' + data.posts[index].id + '" href="single.html"><img alt="Missing" class="img-rounded" src="photos/' + thumb + '/missing.png"></a></div></div><div class="post-content pull-left"><div style="font-weight:bold; font-size:18px"><a class="toSingle" data-id="' + data.posts[index].id + '" href="single.html">' + data.posts[index].title + '</a></div><p class="text-muted">Posted by <a class="toUser" href="profile.html" data-uid="' + userData[index].username + '" style="color:#000; text-decoration:none;">' + userData[index].username + '</a> ' + dateDiffInDays(data.posts[index].created_at) + '</p></div><div class="clearfix"></div></div>';
             $('#add-post').prepend(post);
         });
         setTimeout(animateIn, 1000);
     }
+    $('.toUser').click(function(e) {
+        e.preventDefault();
+        window.localStorage.setItem("userProfileId", $(this).data('uid'));
+        window.localStorage.setItem("profile_view", 'activity');
+        window.location = $(this).attr('href');
+    });
+}
+
+
+function getProfileData(name) {
+
+    var url;
+
+    if (window.localStorage.getItem('page') == 'squawks') url = 'http://squawkar.herokuapp.com/api/v1/profile/' + name + '/squawks?user_token=' + window.localStorage.getItem('user_token');
+    else if (window.localStorage.getItem('page') == 'favourites') url = 'http://squawkar.herokuapp.com/api/v1/profile/' + name + '/favourites?user_token=' + window.localStorage.getItem('user_token');
+    else url = 'http://squawkar.herokuapp.com/api/v1/profile/' + name + '/?user_token=' + window.localStorage.getItem('user_token');
+
+    $.ajax({
+        type: 'GET',
+        url: url,
+        contentType: "application/json",
+        dataType: 'jsonp',
+        jsonp: "callback",
+        crossDomain: true,
+        success: function(res) {
+            console.log(res);
+            $('.usr-name').html('<i class="icon-user"></i>' + res.user.slug);
+            $('.joined').html('<i class="glyphicon glyphicon-time"></i>' + dateDiffInDays(res.user.created_at));
+            if (window.localStorage.getItem('page') == 'squawks') addSquawks(res);
+            else addActivity(res.activities);
+        },
+        error: function(res) {
+            console.log("error");
+        }
+    });
+}
+
+
+function addSquawks(data) {
+    $.each(data.squawks, function(index, val) {
+        var html = '<div class="post"> <div style="box-shadow: 0px 0px 0px 0px rgba(34, 34, 34, 0.15),inset 0px -4px 0px 0px #D7351C !important; height:53px; width:50px; border-radius:5px; margin-right:15px;" class="pull-left"> <div class="post-thumb pull-left" style="width:50px;"> <a class="post-thumb toSingle" href="single.html" data-id="' + val.id + '" style=""><img alt="Missing" class="img-rounded" src="photos/' + val.format + '/missing.png"></a> </div> </div> <div class="post-content pull-left"> <div style="font-weight:bold; font-size:18px;"> <a href="single.html" data-id="' + val.id + '">' + ((val.format == "text") ? val.title : val.graffiti_text) + '</a> </div> <p class="text-muted">Posted by <a href="profile.html" class="toUser" data-uid="' + data.user.slug + '" style="color:#000; text-decoration:none;">' + data.user.slug + '</a> ' + dateDiffInDays(val.created_at) + '</p> </div> <div class="clearfix"></div> </div>';
+        $('.squawks').append(html);
+    });
+
+    $('.toUser').click(function(e) {
+        e.preventDefault();
+        window.localStorage.setItem("userProfileId", $(this).data('uid'));
+        window.localStorage.setItem("profile_view", 'activity');
+        window.location = $(this).attr('href');
+    });
+}
+
+function addActivity(data) {
+    $.each(data, function(index, val) {
+        var html = '<div class="col-lg-12"> <div style="box-shadow: 0px 0px 0px 0px rgba(34, 34, 34, 0.15),inset 0px -4px 0px 0px #D7351C !important; height:53px; width:50px; border-radius:5px;  margin-right:15px;" class="pull-left"> <div class="post-thumb pull-left" style="width:50px;"> <a class="post-thumb" href="single.html" data-id="' + val.id + '"> <img alt="Missing" class="img-rounded" src="photos/text/missing.png"></a> </div> </div> <div class="post-content pull-left"> <div style="font-weight:bold; font-size:18px;"> <span style="font-weight:normal;">Posted</span> <a href="/squawks/61">testt</a> </div> <p class="text-muted">Posted by <a href="/profile/azrael" style="color:#000; text-decoration:none;">azrael</a> 6 days ago</p> </div> <div class="clearfix"></div> </div>';
+        $('.activity').append(html);
+    });
 }
 
 function animateIn() {
@@ -128,8 +185,6 @@ function getData(data) {
 
 
 function addSingleData(data) {
-
-    console.log(data);
 
     if (data.squawk.format == 'graffiti') {
         var text = '<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12"><div class="graffiti-text"><h1>' + data.squawk.graffiti_text + '</h1></div></div>';
@@ -211,11 +266,25 @@ function createPost(title, description, category, format) {
 
     if (format == 'text' && (title.length < 5 || title.length >= 90)) return 'title_error';
 
-    else if (description.length > 200) return 'description_error';
+    else if (format == 'text' && description.length > 200) return 'description_error';
     else if (category.length < 1 || category.length >= 20) return 'category_error';
 
     var url = 'http://squawkar.herokuapp.com/api/v1/squawks/new?user_token=' + window.localStorage.getItem('user_token');
 
+    if (format == "text") {
+        var data = {
+            title: title,
+            description: description,
+            category: category,
+            format: format
+        };
+    } else {
+        var data = {
+            graffiti_text: description,
+            category: category,
+            format: format
+        };
+    }
 
     $.ajax({
         type: 'GET',
@@ -225,12 +294,7 @@ function createPost(title, description, category, format) {
         jsonp: "callback",
         crossDomain: true,
         data: {
-            squawk: {
-                title: title,
-                description: description,
-                category: category,
-                format: format
-            },
+            squawk: data,
             commit: 'Squawk'
         },
         success: function(res) {
@@ -241,6 +305,7 @@ function createPost(title, description, category, format) {
             console.log('error');
         }
     });
+
 }
 
 function deletePost(postId) {
@@ -298,10 +363,10 @@ function addComment(postId, comment, isGraffiti) {
 }
 
 function registration() {
-    var url = 'http://squawkar.herokuapp.com/api/v1/api_users';
+    var url = 'http://squawkar.herokuapp.com/api/v1/api_users/sign_up';
 
     $.ajax({
-        type: 'POST',
+        type: 'GET',
         url: url,
         contentType: "application/json",
         dataType: 'jsonp',
@@ -331,7 +396,6 @@ function registration() {
 
 function like(action, postId, commentId) {
 
-    console.log('megy');
 
     if (window.localStorage.getItem('user_token') == -1) return;
 
@@ -401,13 +465,13 @@ jQuery(document).ready(function() {
         window.localStorage.setItem("user_token", '-1');
 
     if (window.localStorage.getItem('user_token') != -1) {
-        var navbar = '<li><a class="new-squawk-button" href="new.html">Squawk</a></li><li><a href="/notifications">Notifications</a></li><li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"> ' + window.localStorage.getItem('user_name') + ' <b class="caret"></b> </a> <ul class="dropdown-menu"> <li><a href="/profile/' + window.localStorage.getItem('user_name') + '">Profile</a></li> <li><a href="/following">Following</a></li> <li><a href="/users/edit">Settings</a></li> <li class="divider"></li> <li><a id="logout" data-method="delete" href="/users/sign_out" rel="nofollow">Logout</a></li> </ul> </li>';
+        var navbar = '<li><a class="new-squawk-button" href="new.html">Squawk</a></li><li><a href="/notifications">Notifications</a></li><li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"> ' + window.localStorage.getItem('user_name') + ' <b class="caret"></b> </a> <ul class="dropdown-menu"> <li><a class="toUser" href="profile.html" data-uid="' + window.localStorage.getItem('user_name') + '">Profile</a></li> <li><a href="/following">Following</a></li> <li class="divider"></li> <li><a id="logout" data-method="delete" href="" rel="nofollow">Logout</a></li> </ul> </li>';
         $('.navbar-right').html(navbar);
     }
 
+    $('.select2').select2();
 
     getData('squawks');
-
 
     $('.category-button').click(function() {
         $('#squawk_category').val($(this).data('category'));
@@ -415,7 +479,6 @@ jQuery(document).ready(function() {
 
 
     $('#search').submit(function(e) {
-
 
         var postsToHide = $('.post');
         var filter = 'search?q=' + $(this).find('#q').val();
@@ -434,7 +497,7 @@ jQuery(document).ready(function() {
         return false;
     });
 
-    $('.nav-pills a').click(function(event) {
+    $('.nav-pills:not(.profile) a').click(function(event) {
         event.preventDefault();
         var postsToHide = $('.post');
 
@@ -471,7 +534,6 @@ jQuery(document).ready(function() {
             }
         })
             .done(function(res) {
-                console.log(res);
                 window.localStorage.setItem("user_token", res.user_token);
                 window.localStorage.setItem("user_name", res.username);
                 window.location = 'index.html';
@@ -500,6 +562,13 @@ jQuery(document).ready(function() {
         if (response == "title_error") alert('Title must be between 5 and 20 characters');
         if (response == "description_error") alert('Description must be less than 200 characters');
         if (response == "category_error") alert('Category must be filled');
+    });
+
+    $('.toUser').click(function(e) {
+        e.preventDefault();
+        window.localStorage.setItem("userProfileId", $(this).data('uid'));
+        window.localStorage.setItem("profile_view", 'activity');
+        window.location = $(this).attr('href');
     });
 
     $(".pagination li a").click(function(event) {

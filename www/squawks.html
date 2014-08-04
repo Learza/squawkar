@@ -40,7 +40,7 @@
     </head>
 <body>
 <div id="wrap">
-    <nav class="navbar navbar-static navbar-default" role="navigation">
+        <nav class="navbar navbar-static navbar-default" role="navigation">
         <div class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -68,82 +68,86 @@
             </div>
         </div>
     </nav>
+        
+<div style="padding:20px; margin-top:-20px;">
     <div class="container">
-        <div class="row">
-            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                <ul class="nav nav-pills">
-                    <li class="active">
-                        <a href="/" id="all">Latest</a>
-                    </li>
-                    <li>
-                        <a href="/" id="popular">Popular</a>
-                    </li>
-                    <li>
-                        <a href="/" id="commented">Most Commented</a>
-                    </li>
-                </ul>
+        <div class="col-xs-4 col-sm-2 col-md-1 col-lg-1">
+            <div class="row">
+                <a href="/profile/azrael">
+                    <img alt="Missing" class="img-rounded" src="img/missing.png" style="width:80%;">
+</a>            </div>
+        </div>
+        <div class="col-xs-8 col-sm-10 col-md-11 col-lg-11">
+            <div class="row">
+
+                <h3 style="margin-top:5px;" class="usr-name"></h3>
+
+                <p class="joined" style="margin-top:5px; margin-bottom:0;">
+                </p>
             </div>
         </div>
     </div>
-    <hr>
+</div>
+<div class="profile-menu">
     <div class="container">
-        <div class="row">
-            <div class="col-lg-"></div>
-        </div>
+        <ul class="nav nav-pills nav-pills-center profile">
+            <li><a href="profile.html">Activity</a></li>
+            <li><a href="squawks.html">Squawks</a></li>
+            <li><a href="favourites.html">Favourites</a></li>
+        </ul>
     </div>
-    <div class="container">
-        <div class="row">
-            <div id="add-post" class="col-lg-9">
-                
-            </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-9 squawks">
+            
+        </div>
             <div class="col-lg-3">
-                <form accept-charset="UTF-8" action="/search" method="get" id="search">
-                    <div style="margin:0;padding:0;display:inline">
-                        <input name="utf8" type="hidden" value="✓">
-                    </div>
+                <form accept-charset="UTF-8" action="/search" method="get"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="✓"></div>
                     <div class="input-group input-group-lg">
                         <input class="form-control" id="q" name="q" placeholder="Search" type="text">
                         <span class="input-group-btn">
                             <button class="btn btn-default" type="button"><i class="glyphicon glyphicon-search"></i></button>
                         </span>
-                    </div><br>
+                    </div>
+                    <br>
                 </form>
                 <ul class="nav nav-pills nav-stacked">
                     <li class="active">
                         <a href="index.html" data-link="squawks">All</a>
                     </li>
                     <li>
-                        <a href="/" data-link="category/news" id="news">News</a>
+                        <a href="index.html" data-link="category/news" id="news">News</a>
                     </li>
                     <li>
-                        <a href="/" data-link="category/politics" id="politics">Politics</a>
+                        <a href="index.html" data-link="category/politics" id="politics">Politics</a>
                     </li>
                     <li>
-                        <a href="/" data-link="category/sport" id="sport">Sport</a>
+                        <a href="index.html" data-link="category/sport" id="sport">Sport</a>
                     </li>
                     <li>
-                        <a href="/" data-link="category/entertainment" id="entertainment">Entertainment &amp; Arts</a>
+                        <a href="index.html" data-link="category/entertainment" id="entertainment">Entertainment &amp; Arts</a>
                     </li>
                     <li>
-                        <a href="/" data-link="category/funny" id="funny">Witty and Weird</a>
+                        <a href="index.html" data-link="category/funny" id="funny">Witty and Weird</a>
                     </li>
                     <li>
-                        <a href="/" data-link="category/technologyenvironment" id="technologyenvironment">Technology &amp; Environment</a>
+                        <a href="index.html" data-link="category/technologyenvironment" id="technologyenvironment">Technology &amp; Environment</a>
                     </li>
                 </ul>
             </div>
         </div>
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="text-center">
-                    <ul class="pagination">
-                        
-                    </ul>
-                </div>
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="text-center">
+                
             </div>
         </div>
     </div>
 </div>
+    </div>
 <div class="clearfix">
     <br>
 </div>
@@ -163,4 +167,11 @@
         </div>
     </div>
 </body>
+<script>
+    window.localStorage.setItem('page', 'squawks');
+    getProfileData(window.localStorage.getItem('userProfileId'));
+    $('.nav-pills a').click(function(){
+
+    });
+</script>
 </html>
