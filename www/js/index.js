@@ -65,10 +65,32 @@ function addPost(data) {
 
         var pag = '<li class="prev"><span>← Previous</span></li>';
         for (var i = 1; i <= data.counts.pages; i++) {
-            pag += '<li><a href="/?page=' + i + '">' + i + '</a></li>';
+            pag += '<li><a href="?page=' + i + '">' + i + '</a></li>';
         }
         pag += '<li class="next"> <a rel="next" href="/?page=2">Next →</a> </li>';
         $('.pagination').html(pag);
+
+        $(".pagination li a").click(function(event) {
+            event.preventDefault();
+            var postsToHide = $('.post');
+
+            $(this).parent().siblings('li').removeClass('active');
+            $(this).parent().addClass('active');
+
+            var page = $(this).attr('href').replace('/', '');
+
+            postsToHide.each(function(index, el) {
+                setTimeout(function() {
+                    $(el).addClass('transfromOut');
+                }, 50 * index);
+                setTimeout(function() {
+                    $(this).remove();
+                    if (postsToHide.length == index + 1) {
+                        getData(filter + page);
+                    }
+                }, 2100);
+            });
+        });
 
         var userData = data.userdata.reverse();
 
@@ -569,28 +591,6 @@ jQuery(document).ready(function() {
         window.localStorage.setItem("userProfileId", $(this).data('uid'));
         window.localStorage.setItem("profile_view", 'activity');
         window.location = $(this).attr('href');
-    });
-
-    $(".pagination li a").click(function(event) {
-        event.preventDefault();
-        var postsToHide = $('.post');
-
-        $(this).parent().siblings('li').removeClass('active');
-        $(this).parent().addClass('active');
-
-        var page = $(this).attr('href').replace('/', '');
-
-        postsToHide.each(function(index, el) {
-            setTimeout(function() {
-                $(el).addClass('transfromOut');
-            }, 50 * index);
-            setTimeout(function() {
-                $(this).remove();
-                if (postsToHide.length == index + 1) {
-                    getData(filter + page);
-                }
-            }, 2100);
-        });
     });
 
 });
