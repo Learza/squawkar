@@ -8693,4 +8693,6 @@ p {
     .post-content a, .post-content p { font-size: 16px; }
     .navbar-brand div { font-size: 28px !important; }
     .nav-pills li a { font-size: 13px !important; }
+    #footer p { font-size: 12px; margin: 20px 0; }
+    .center-banner h3 { margin-top: 10px; margin-bottom: 0; font-size: 30px; }
 }
