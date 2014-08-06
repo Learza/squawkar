@@ -68,43 +68,38 @@
             </div>
         </div>
     </nav>
-        <div class="center-banner text-center">
+<div class="header">
     <div class="container">
-        <h3>Login</h3>
+        <h1>Notifications</h1>
     </div>
 </div>
+
 <div class="container">
-    
-    <br>
     <div class="row">
-        <div class="col-md-6 col-md-offset-3">
-            <div class="panel panel-default">
-                <div class="panel-body">
-                    <form accept-charset="UTF-8" action="/users/sign_in" class="new_user" id="new_user" method="post"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="✓"><input name="authenticity_token" type="hidden" value="3JnCt7n5Cv8Ek8fILc9scIIHn9mxri46wEZA9C7JbY0="></div>
-                        <div class="form-group input-group-lg">
-                            <a class="pull-right orange-link" href="/users/sign_up">Create an account</a>
-                            <label for="user_login">Username or Email</label>
-                            <input autofocus="autofocus" class="form-control" id="user_login" name="user[login]" type="text">
-                        </div>
-
-                        <div class="form-group input-group-lg">
-                            <a class="pull-right orange-link" href="forgot.html">Forgot Password?</a>
-                            <label for="user_password">Password</label>
-                            <input class="form-control" id="user_password" name="user[password]" type="password">
-                        </div>
-
-                        <input class="btn btn-wi btn-lg btn-block" name="commit" type="submit" value="Sign In" id="login_btn">
-                    </form>
+        <div class="col-md-3 col-lg-3">
+            <ul class="nav nav-pills nav-stacked">
+                <li class="active"><a id="unread_notif" href="/notifications">Unread</a></li>
+                <li><a id="all_notif" href="/notifications/all">All</a></li>
+            </ul>
+            <br>
+        </div>
+        <div class="col-mg-9 col-lg-9 notify">
+                    
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="text-center">
+                        
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-    </div>
-
-    <div class="clearfix"><br></div>
-
-    <div id="footer">
+</div>
+<div class="clearfix">
+    <br>
+</div>
+<div id="footer">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
@@ -114,16 +109,15 @@
                         <a href="about.html">About</a> |
                         <a href="mailto:contact@squawkar.com">Contact</a>
                     </p>
-                    <p class="pull-left">© 2014 <a href="/">Squawkar</a></p>
+                    <p class="pull-left">© 2014 <a href="index.html">Squawkar</a></p>
                 </div>
             </div>
         </div>
     </div>
-<script type="text/javascript">
-/* <![CDATA[ */
-(function(){try{var s,a,i,j,r,c,l=document.getElementsByTagName("a"),t=document.createElement("textarea");for(i=0;l.length-i;i++){try{a=l[i].getAttribute("href");if(a&&"www.cloudflare.com/email-protection"==a.substr(7 ,35)){s='';j=43;r=parseInt(a.substr(j,2),16);for(j+=2;a.length-j&&a.substr(j,1)!='X';j+=2){c=parseInt(a.substr(j,2),16)^r;s+=String.fromCharCode(c);}j+=1;s+=a.substr(j,a.length-j);t.innerHTML=s.replace(/</g,"&lt;").replace(/>/g,"&gt;");l[i].setAttribute("href","mailto:"+t.value);}}catch(e){}}}catch(e){}})();
-/* ]]> */
-</script>
-
 </body>
+<script>
+$(document).ready(function() {
+    notifications('unread');
+});
+</script>
 </html>

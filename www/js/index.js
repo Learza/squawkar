@@ -56,43 +56,84 @@ var app = {
 var post;
 var user_token;
 
+function notifications(type) {
+
+    $('.notify').html('');
+
+    if (type == 'unread')
+        var url = 'http://squawkar.herokuapp.com/api/v1/notifications/?user_token=' + window.localStorage.getItem('user_token');
+    else
+        var url = 'http://squawkar.herokuapp.com/api/v1/notifications/all/?user_token=' + window.localStorage.getItem('user_token');;
+
+    $.ajax({
+        type: 'GET',
+        url: url,
+        contentType: "application/json",
+        dataType: 'jsonp',
+        jsonp: "callback",
+        crossDomain: true,
+        success: function(res) {
+            console.log(res);
+            addNotifications(res);
+        },
+        error: function(res) {
+            console.log("error");
+        }
+    });
+}
+
+
+function addNotifications(data) {
+    var html;
+    $.each(data.notifications, function(index, val) {
+        html = '<div class="list-group"> <a href="#" class="list-group-item" style="font-size:18px;"> <span style="color:#FF5200; font-weight:bold;">' + data.userdata[index].username + '</span> commented on <span style="color:#FF5200; font-weight:bold;">' + data.post_data[index].title + '</span> about ' + dateDiffInDays(data.notifications[index].created_at) + ' </a> </div>';
+        $('.notify').append(html);
+
+    });
+}
+
 function addPost(data) {
 
     if (data.length == 0) {
         $('#add-post').prepend('<h1 class="text-center post">No Squawks Found</h1>');
     } else {
 
+        if (data.counts != undefined) {
+            var pag = ''; //<li class="prev"><span>← Previous</span></li>
+            for (var i = 1; i <= data.counts.pages; i++) {
+                pag += '<li><a href="?page=' + i + '">' + i + '</a></li>';
+            }
+            pag += ''; //<li class="next"> <a rel="next" href="/?page=2">Next →</a> </li>
+            $('.pagination').html(pag);
 
-        var pag = '<li class="prev"><span>← Previous</span></li>';
-        for (var i = 1; i <= data.counts.pages; i++) {
-            pag += '<li><a href="?page=' + i + '">' + i + '</a></li>';
-        }
-        pag += '<li class="next"> <a rel="next" href="/?page=2">Next →</a> </li>';
-        $('.pagination').html(pag);
+            $(".pagination li a").click(function(event) {
+                event.preventDefault();
+                var postsToHide = $('.post');
 
-        $(".pagination li a").click(function(event) {
-            event.preventDefault();
-            var postsToHide = $('.post');
+                $(this).parent().siblings('li').removeClass('active');
+                $(this).parent().addClass('active');
 
-            $(this).parent().siblings('li').removeClass('active');
-            $(this).parent().addClass('active');
+                var page = $(this).attr('href').replace('/', '');
 
-            var page = $(this).attr('href').replace('/', '');
-
-            postsToHide.each(function(index, el) {
-                setTimeout(function() {
-                    $(el).addClass('transfromOut');
-                }, 50 * index);
-                setTimeout(function() {
-                    $(this).remove();
-                    if (postsToHide.length == index + 1) {
-                        getData(filter + page);
-                    }
-                }, 2100);
+                postsToHide.each(function(index, el) {
+                    setTimeout(function() {
+                        $(el).addClass('transfromOut');
+                    }, 50 * index);
+                    setTimeout(function() {
+                        $(this).remove();
+                        if (postsToHide.length == index + 1) {
+                            getData(filter + page);
+                        }
+                    }, 2100);
+                });
             });
-        });
+        }
 
-        var userData = data.userdata.reverse();
+
+        if (data.userdata == undefined)
+            var userData = data.users.reverse();
+        else
+            var userData = data.userdata.reverse();
 
         $.each(data.posts.reverse(), function(index, val) {
             var thumb, content;
@@ -135,7 +176,8 @@ function getProfileData(name) {
             $('.usr-name').html('<i class="icon-user"></i>' + res.user.slug);
             $('.joined').html('<i class="glyphicon glyphicon-time"></i>' + dateDiffInDays(res.user.created_at));
             if (window.localStorage.getItem('page') == 'squawks') addSquawks(res);
-            else addActivity(res.activities);
+            else if (window.localStorage.getItem('page') == 'favourites') addFavourites(res);
+            else addActivity(res);
         },
         error: function(res) {
             console.log("error");
@@ -158,9 +200,24 @@ function addSquawks(data) {
     });
 }
 
+function addFavourites(data) {
+    $.each(data.squawks, function(index, val) {
+        var html = '<div class="post"> <div style="box-shadow: 0px 0px 0px 0px rgba(34, 34, 34, 0.15),inset 0px -4px 0px 0px #D7351C !important; height:53px; width:50px; border-radius:5px; margin-right:15px;" class="pull-left"> <div class="post-thumb pull-left" style="width:50px;"> <a class="post-thumb toSingle" href="single.html" data-id="' + val.id + '" style=""><img alt="Missing" class="img-rounded" src="photos/' + val.format + '/missing.png"></a> </div> </div> <div class="post-content pull-left"> <div style="font-weight:bold; font-size:18px;"> <a href="single.html" data-id="' + val.id + '">' + ((val.format == "text") ? val.title : val.graffiti_text) + '</a> </div> <p class="text-muted">Posted by <a href="profile.html" class="toUser" data-uid="' + data.user.slug + '" style="color:#000; text-decoration:none;">' + data.user.slug + '</a> ' + dateDiffInDays(val.created_at) + '</p> </div> <div class="clearfix"></div> </div>';
+        $('.squawks').append(html);
+    });
+
+    $('.toUser').click(function(e) {
+        e.preventDefault();
+        window.localStorage.setItem("userProfileId", $(this).data('uid'));
+        window.localStorage.setItem("profile_view", 'activity');
+        window.location = $(this).attr('href');
+    });
+}
+
 function addActivity(data) {
-    $.each(data, function(index, val) {
-        var html = '<div class="col-lg-12"> <div style="box-shadow: 0px 0px 0px 0px rgba(34, 34, 34, 0.15),inset 0px -4px 0px 0px #D7351C !important; height:53px; width:50px; border-radius:5px;  margin-right:15px;" class="pull-left"> <div class="post-thumb pull-left" style="width:50px;"> <a class="post-thumb" href="single.html" data-id="' + val.id + '"> <img alt="Missing" class="img-rounded" src="photos/text/missing.png"></a> </div> </div> <div class="post-content pull-left"> <div style="font-weight:bold; font-size:18px;"> <span style="font-weight:normal;">Posted</span> <a href="/squawks/61">testt</a> </div> <p class="text-muted">Posted by <a href="/profile/azrael" style="color:#000; text-decoration:none;">azrael</a> 6 days ago</p> </div> <div class="clearfix"></div> </div>';
+    $.each(data.activities, function(index, val) {
+        //var html = '<div class="col-lg-12"> <div style="box-shadow: 0px 0px 0px 0px rgba(34, 34, 34, 0.15),inset 0px -4px 0px 0px #D7351C !important; height:53px; width:50px; border-radius:5px;  margin-right:15px;" class="pull-left"> <div class="post-thumb pull-left" style="width:50px;"> <a class="post-thumb" href="single.html" data-id="' + val.id + '"> <img alt="Missing" class="img-rounded" src="photos/text/missing.png"></a> </div> </div> <div class="post-content pull-left"> <div style="font-weight:bold; font-size:18px;"> <span style="font-weight:normal;">Posted</span> <a href="/squawks/61">testt</a> </div> <p class="text-muted">Posted by <a href="/profile/azrael" style="color:#000; text-decoration:none;">azrael</a> 6 days ago</p> </div> <div class="clearfix"></div> </div>';
+        var html = '<div class="post"> <div style="box-shadow: 0px 0px 0px 0px rgba(34, 34, 34, 0.15),inset 0px -4px 0px 0px #D7351C !important; height:53px; width:50px; border-radius:5px; margin-right:15px;" class="pull-left"> <div class="post-thumb pull-left" style="width:50px;"> <a class="post-thumb toSingle" href="single.html" data-id="' + val.id + '" style=""><img alt="Missing" class="img-rounded" src="photos/' + data.squawks[index].format + '/missing.png"></a> </div> </div> <div class="post-content pull-left"> <div style="font-weight:bold; font-size:18px;"> <a href="single.html" data-id="' + val.trackable_id + '">' + ((data.squawks[index].format == "text") ? data.squawks[index].title : data.squawks[index].graffiti_text) + '</a> </div> <p class="text-muted">Posted by <a href="profile.html" class="toUser" data-uid="' + data.user.slug + '" style="color:#000; text-decoration:none;">' + data.user.slug + '</a> ' + dateDiffInDays(val.created_at) + '</p> </div> <div class="clearfix"></div> </div>';
         $('.activity').append(html);
     });
 }
@@ -180,11 +237,12 @@ function toSingle() {
     window.location = 'single.html';
 }
 
-
-
 function getData(data) {
     var url = 'http://squawkar.herokuapp.com/api/v1/' + data;
     var ret;
+
+    if (data == 'following')
+        url += '?user_token=' + window.localStorage.getItem('user_token');
 
     $.ajax({
         type: 'GET',
@@ -197,7 +255,6 @@ function getData(data) {
         success: function(res) {
             addPost(res);
             $('.toSingle').bind('click', toSingle);
-
         },
         error: function(res) {
             $('#add-post').prepend('error');
@@ -487,17 +544,26 @@ jQuery(document).ready(function() {
         window.localStorage.setItem("user_token", '-1');
 
     if (window.localStorage.getItem('user_token') != -1) {
-        var navbar = '<li><a class="new-squawk-button" href="new.html">Squawk</a></li><li><a href="/notifications">Notifications</a></li><li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"> ' + window.localStorage.getItem('user_name') + ' <b class="caret"></b> </a> <ul class="dropdown-menu"> <li><a class="toUser" href="profile.html" data-uid="' + window.localStorage.getItem('user_name') + '">Profile</a></li> <li><a href="/following">Following</a></li> <li class="divider"></li> <li><a id="logout" data-method="delete" href="" rel="nofollow">Logout</a></li> </ul> </li>';
+        var navbar = '<li><a class="new-squawk-button" href="new.html">Squawk</a></li><li><a href="notifications.html">Notifications</a></li><li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"> ' + window.localStorage.getItem('user_name') + ' <b class="caret"></b> </a> <ul class="dropdown-menu"> <li><a class="toUser" href="profile.html" data-uid="' + window.localStorage.getItem('user_name') + '">Profile</a></li> <li><a href="following.html">Following</a></li> <li class="divider"></li> <li><a id="logout" data-method="delete" href="" rel="nofollow">Logout</a></li> </ul> </li>';
         $('.navbar-right').html(navbar);
     }
 
     $('.select2').select2();
 
-    getData('squawks');
 
     $('.category-button').click(function() {
         $('#squawk_category').val($(this).data('category'));
     });
+
+    $('#unread_notif').click(function(e) {
+        e.preventDefault();
+        notifications('unread');
+    });
+    $('#all_notif').click(function(e) {
+        e.preventDefault();
+        notifications('alll');
+    });
+
 
 
     $('#search').submit(function(e) {
