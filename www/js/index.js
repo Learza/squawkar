@@ -539,6 +539,8 @@ var filter = 'squawks';
 
 jQuery(document).ready(function() {
 
+    console.log('test');
+
 
     if (window.localStorage.getItem('user_token') == undefined)
         window.localStorage.setItem("user_token", '-1');
