@@ -227,7 +227,7 @@ function animateIn() {
     postsToHide.each(function(index, el) {
         setTimeout(function() {
             $(el).addClass('has-transition').removeClass('transfromOut');
-        }, 50 * index);
+        }, 30 * index);
     });
 }
 
@@ -539,14 +539,13 @@ var filter = 'squawks';
 
 jQuery(document).ready(function() {
 
-    console.log('test');
-
     if (window.localStorage.getItem('user_token') == undefined)
         window.localStorage.setItem("user_token", '-1');
 
     if (window.localStorage.getItem('user_token') != -1) {
         var navbar = '<li><a class="new-squawk-button" href="new.html">Squawk</a></li><li><a href="notifications.html">Notifications</a></li><li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"> ' + window.localStorage.getItem('user_name') + ' <b class="caret"></b> </a> <ul class="dropdown-menu"> <li><a class="toUser" href="profile.html" data-uid="' + window.localStorage.getItem('user_name') + '">Profile</a></li> <li><a href="following.html">Following</a></li> <li class="divider"></li> <li><a id="logout" data-method="delete" href="" rel="nofollow">Logout</a></li> </ul> </li>';
         $('.navbar-right').html(navbar);
+        $('.hide-onLoggedin').remove();
     }
 
     //$('.select2').select2();
@@ -565,7 +564,15 @@ jQuery(document).ready(function() {
         notifications('alll');
     });
 
-
+    $('.top-menu>li:first-of-type').click(function(event){
+        event.preventDefault();
+        if ($('.top-menu li div').hasClass('show-menu')){
+            $('.top-menu li div').removeClass('show-menu').css('height', '0px');
+        }
+        else {
+            $('.top-menu li div').addClass('show-menu').css('height', $('.top-menu ul.nav').height());
+        }
+    });
 
     $('#search').submit(function(e) {
 
@@ -586,7 +593,7 @@ jQuery(document).ready(function() {
         return false;
     });
 
-    $('.nav-pills:not(.profile) a').click(function(event) {
+    $('.nav-pills:not(.profile):not(.top-menu) a').click(function(event) {
         event.preventDefault();
         var postsToHide = $('.post');
 
