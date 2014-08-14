@@ -574,8 +574,13 @@ jQuery(document).ready(function() {
         }
     });
 
-    $('#search').submit(function(e) {
+    $('#search button').click(function(e){
+        e.preventDefault();
+        $('#search').submit();
+    })
 
+    $('#search').submit(function(e) {
+        e.preventDefault();
         var postsToHide = $('.post');
         var filter = 'search?q=' + $(this).find('#q').val();
 
