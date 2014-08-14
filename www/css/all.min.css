@@ -8020,6 +8020,7 @@ p {
 }
 .post {
     margin-bottom: 15px;
+    border-bottom: 1px solid lightgray;
 }
 .post .post-thumb img {
     width: 100%;
