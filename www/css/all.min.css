@@ -424,6 +424,10 @@ dd {
 	 -webkit-transition:all 2s ease;transition:all 2s ease;
 }
 
+.has-transition2{
+     -webkit-transition:all 1s ease;transition:all 1s ease;
+}
+
 .transfromIn{
 	-webkit-transform: translateX(0px);
 }
@@ -431,6 +435,8 @@ dd {
 .transfromOut{
 	-webkit-transform: translateX(-1000px);
 }
+
+.hide-onLoggedin{font-size: 15px;}
 
 .navbar>.container .navbar-brand {
 	font-family: "proxima-nova", sans-serif;
@@ -8022,6 +8028,7 @@ p {
     margin-bottom: 15px;
     border-bottom: 1px solid lightgray;
 }
+.post:last-of-type{border-bottom: 0px}
 .post .post-thumb img {
     width: 100%;
     height: auto;
