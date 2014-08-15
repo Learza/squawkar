@@ -4,13 +4,13 @@
     <description>
         Squawkar mobile application
     </description>
-    <author email="support@phonegap.com" href="http://aurettoworks.com">
+    <author email="dev@aurettoworks.com" href="http://aurettoworks.com">
         AurettoWorks
     </author>
     <preference name="permissions" value="none" />
     <feature name="http://api.phonegap.com/1.0/network"/>
     <feature name="http://api.phonegap.com/1.0/file"/>
-    <preference name="phonegap-version" value="3.4.0" />
+    <preference name="phonegap-version" value="3.5.0" />
     <preference name="orientation" value="default" />
     <preference name="target-device" value="universal" />
     <preference name="fullscreen" value="true" />
