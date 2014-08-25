@@ -676,8 +676,9 @@ jQuery(document).ready(function() {
         var response = createPost(title, description, category, format);
 
         if (response == "title_error") alert('Title must be between 5 and 20 characters');
-        if (response == "description_error") alert('Description must be less than 200 characters');
-        if (response == "category_error") alert('Category must be filled');
+        else if (response == "description_error") alert('Description must be less than 200 characters');
+        else if (response == "category_error") alert('Category must be filled');
+        else window.location = "index.html";
     });
 
     $('.toUser').click(function(e) {
