@@ -265,6 +265,8 @@ function getData(data) {
 
 function addSingleData(data) {
 
+    console.log(data);
+
     if (data.squawk.format == 'graffiti') {
         var text = '<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12"><div class="graffiti-text"><h1>' + data.squawk.graffiti_text + '</h1></div></div>';
     } else {
@@ -273,7 +275,7 @@ function addSingleData(data) {
         text = title + text;
     }
 
-    var authorData = '<a href="/profile/' + data.userdata[0].username + '" style="text-decoration:none;"><img alt="Missing" class="img-rounded" src="img/missing.png"></a> <strong style="font-size:20px; margin-left:5px;"><a href="/profile/' + data.userdata[0].username + '" style="color:#000; text-decoration:none;">' + data.userdata[0].username + '</a></strong> - <strong syle="font-size:18px; font-weight:normal;">Posted ' + dateDiffInDays(data.squawk.created_at) + '</strong>';
+    var authorData = '<a class="toUser" data-uid="' + data.userdata[0].username + '" href="/profile/' + data.userdata[0].username + '" style="text-decoration:none;"><img alt="Missing" class="img-rounded" src="img/missing.png"></a> <strong style="font-size:20px; margin-left:5px;"><a class="toUser" data-uid="' + data.userdata[0].username + '" href="/profile/' + data.userdata[0].username + '" style="color:#000; text-decoration:none;">' + data.userdata[0].username + '</a></strong> - <strong syle="font-size:18px; font-weight:normal;">Posted ' + dateDiffInDays(data.squawk.created_at) + '</strong>';
     $('#text').html(text);
     $('#author-data').html(authorData);
 
@@ -287,13 +289,20 @@ function addSingleData(data) {
                 var unlike = data.votes[index].downvotes + 'Dislikes';
             }
             //TODO user data
-            var comment = '<div class="media"><a class="pull-left" href="/profile/' + data.commentusers[index].username + '" style="text-decoration:none;"><img alt="Missing" class="img-rounded media-object" src="img/missing.png"></a><div class="media-body"><h4 class="media-heading" style="font-size:14px;">Posted by <a href="/profile/' + data.commentusers[index].username + '">' + data.commentusers[index].username + '</a> Posted ' + dateDiffInDays(val.created_at) + '<span>-</span> <span class="pull-right">' + like + ' | ' + unlike + ' </span></h4><p>' + val.message + '</p></div></div>';
+            var comment = '<div class="media"><a class="pull-left toUser" data-uid="' + data.commentusers[index].username + '" href="" style="text-decoration:none;"><img alt="Missing" class="img-rounded media-object" src="img/missing.png"></a><div class="media-body"><h4 class="media-heading" style="font-size:14px;">Posted by <a class="toUser" data-uid="' + data.commentusers[index].username + '" href="">' + data.commentusers[index].username + '</a> Posted ' + dateDiffInDays(val.created_at) + '<span>-</span> <span class="pull-right">' + like + ' | ' + unlike + ' </span></h4><p>' + val.message + '</p></div></div>';
             $('#comments').append(comment);
         });
     } else {
         $('#comments h3').remove();
         $('#comments').html('<br><h1 class="text-center">No Comments</h1>');
     }
+
+    $('.toUser').click(function(e) {
+        e.preventDefault();
+        window.localStorage.setItem("userProfileId", $(this).data('uid'));
+        window.localStorage.setItem("profile_view", 'activity');
+        window.location = 'profile.html';
+    });
 
 }
 
@@ -564,17 +573,16 @@ jQuery(document).ready(function() {
         notifications('alll');
     });
 
-    $('.top-menu>li:first-of-type').click(function(event){
+    $('.top-menu>li:first-of-type').click(function(event) {
         event.preventDefault();
-        if ($('.top-menu li div').hasClass('show-menu')){
+        if ($('.top-menu li div').hasClass('show-menu')) {
             $('.top-menu li div').removeClass('show-menu').css('height', '0px');
-        }
-        else {
+        } else {
             $('.top-menu li div').addClass('show-menu').css('height', $('.top-menu ul.nav').height());
         }
     });
 
-    $('#search button').click(function(e){
+    $('#search button').click(function(e) {
         e.preventDefault();
         $('#search').submit();
     })
