@@ -79,40 +79,35 @@
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
             <ul class="nav nav-pills">
                 <li><a href="new.html" onclick="window.location=this.href">Text</a></li>
-                <li><a href="image.html" onclick="window.location=this.href">Image</a></li>
-                <li class="acitve"><a href="graffiti.html">Graffiti</a></li>
+                <li class="active"><a href="image.html">Image</a></li>
+                <li><a href="graffiti.html" onclick="window.location=this.href">Graffiti</a></li>
             </ul>
         </div>
     </div>
 </div>
 
 <hr>
-
 <div class="container">
-<form accept-charset="UTF-8" action="/squawks" class="new_squawk" id="new_squawk" method="post">
-    <div style="margin:0;padding:0;display:inline">
-        <input name="utf8" type="hidden" value="✓"><input name="authenticity_token" type="hidden" value="3JnCt7n5Cv8Ek8fILc9scIIHn9mxri46wEZA9C7JbY0=">
-    </div>
-    <div class="form-group input-group-lg">
-        <label for="squawk_graffiti_text">Graffiti text</label> <input class="form-control" id="squawk_graffiti_text" name="squawk[graffiti_text]" type="text">
-    </div>
-    <div class="form-group input-group-lg">
-        <label for="squawk_category">Category</label> <input class="form-control" id="squawk_category" name="squawk[category]" type="text">
-        <div style="margin-top:10px;">
-            <a href="#" style="color:#FF5200; font-weight:bold; margin-right:5px;" data-category="news" class="category-button">News</a>
-            <a href="#" style="color:#FF5200; font-weight:bold; margin-right:5px;" data-category="politics" class="category-button">Politics</a>
-            <a href="#" style="color:#FF5200; font-weight:bold; margin-right:5px;" data-category="sport" class="category-button">Sport</a>
-            <a href="#" style="color:#FF5200; font-weight:bold; margin-right:5px;" data-category="entertainment" class="category-button">Entertainment</a>
-            <a href="#" style="color:#FF5200; font-weight:bold; margin-right:5px;" data-category="funny" class="category-button">Witty and Weird</a>
-            <a href="#" style="color:#FF5200; font-weight:bold; margin-right:5px;" data-category="technologyenvironment" class="category-button">Technology &amp; Environment</a>
+    <form accept-charset="UTF-8" action="http://squawkar.herokuapp.com/api/v1/squawks/" class="new_squawk image_squawk" enctype="multipart/form-data" id="new_squawk" method="post">
+        <div class="form-group input-group-lg">
+            <label for="squawk_photo">Photo</label> <input id="squawk_photo" name="squawk[photo]" type="file">
         </div>
-    </div>
-    <input id="squawk_format" name="squawk[format]" type="hidden" value="graffiti">
-    <div class="actions">
-        <input id="add-new" class="btn btn-lg btn-wi graffiti" name="commit" type="submit" value="Squawk">
-    </div>
-</form>
+        <div class="form-group input-group-lg">
+            <label for="squawk_title">Title</label> <input class="form-control" id="squawk_title" name="squawk[title]" type="text">
+        </div>
+        <div class="form-group input-group-lg">
+            <label for="squawk_category">Category</label> <input class="form-control" id="squawk_category" name="squawk[category]" type="text">
+            <div style="margin-top:10px;">
+                <a href="#" style="color:#FF5200; font-weight:bold; margin-right:5px;" data-category="news" class="category-button">News</a> <a href="#" style="color:#FF5200; font-weight:bold; margin-right:5px;" data-category="politics" class="category-button">Politics</a> <a href="#" style="color:#FF5200; font-weight:bold; margin-right:5px;" data-category="sport" class="category-button">Sport</a> <a href="#" style="color:#FF5200; font-weight:bold; margin-right:5px;" data-category="entertainment" class="category-button">Entertainment</a> <a href="#" style="color:#FF5200; font-weight:bold; margin-right:5px;" data-category="funny" class="category-button">Witty and Weird</a> <a href="#" style="color:#FF5200; font-weight:bold; margin-right:5px;" data-category="technologyenvironment" class="category-button">Technology &amp; Environment</a>
+            </div>
+        </div>
+        <input id="squawk_format" name="squawk[format]" type="hidden" value="image">
+        <div class="actions">
+            <input class="btn btn-lg btn-wi" name="commit" type="submit" value="Squawk">
+        </div>
+    </form>
 </div>
+
     </div>
 <div class="clearfix">
     <br>
@@ -133,4 +128,35 @@
         </div>
     </div>
 </body>
+<script type="text/javascript">
+    //$('form').append('<input type="hidden" name="user_token" value="'+window.localStorage.getItem('user_token')+'">');
+
+
+$(document).ready(function() {
+    $("form#new_squawk").submit(function(event){
+        event.preventDefault();
+
+        var siteUrl = 'http://squawkar.herokuapp.com/api/v1/squawks/';
+        var formData = new FormData($(this)[0]);
+
+        $('.actions').append('Uploading...');
+
+        $.ajax({
+            url: siteUrl + "?user_token="+window.localStorage.getItem('user_token'),
+            type: 'POST',
+            data: formData,
+            async: false,
+            cache: false,
+            contentType: false,
+            processData: false
+          })
+        .complete(function() {
+            window.location = "index.html";
+        });
+
+        return false;
+    });
+});
+
+</script>
 </html>

@@ -254,6 +254,7 @@ function getData(data) {
         crossDomain: true,
         success: function(res) {
             addPost(res);
+            console.log(res);
             $('.toSingle').bind('click', toSingle);
         },
         error: function(res) {
@@ -556,8 +557,6 @@ jQuery(document).ready(function() {
         $('.navbar-right').html(navbar);
         $('.hide-onLoggedin').remove();
     }
-
-    //$('.select2').select2();
 
 
     $('.category-button').click(function() {
