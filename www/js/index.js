@@ -16,6 +16,9 @@
  * specific language governing permissions and limitations
  * under the License.
  */
+
+    var pictureSource;   // picture source
+    var destinationType; // sets the format of returned value 
 var app = {
     // Application Constructor
     initialize: function() {
@@ -34,7 +37,7 @@ var app = {
     // The scope of 'this' is the event. In order to call the 'receivedEvent'
     // function, we must explicitly call 'app.receivedEvent(...);'
     onDeviceReady: function() {
-        app.receivedEvent('deviceready');
+
     },
     onOffline: function() {
         alert("No internet connection!");
@@ -137,12 +140,24 @@ function addPost(data) {
 
         $.each(data.posts.reverse(), function(index, val) {
             var thumb, content;
-            if (data.posts[index].format != "graffiti") {
-                thumb = 'text';
+            var shadow = "";
+
+            if (data.posts[index].format == "graffiti") {
+                thumb = 'photos/graffiti/missing.png';
+                shadow = "box-shadow: 0px 0px 0px 0px rgba(34, 34, 34, 0.15)";
+            }else if(data.posts[index].format == "image"){
+                var stringID = data.posts[index].id;
+                console.log(stringID);
+                while (stringID.toString().length < 3) {
+                    console.log("Qwe");
+                    stringID = "0" + val.id.toString();
+                }
+                thumb = "http://dw0sh5ecbsahi.cloudfront.net/squawks/photos/000/000/"+stringID+"/tiny/"+val.photo_file_name;
             } else {
-                thumb = 'graffiti';
+                thumb = 'photos/text/missing.png';
+                shadow = "box-shadow: 0px 0px 0px 0px rgba(34, 34, 34, 0.15)";
             }
-            post = '<div class="post transfromOut"><div style="box-shadow: 0px 0px 0px 0px rgba(34, 34, 34, 0.15),inset 0px -4px 0px 0px #D7351C !important; height:53px; width:50px; border-radius:5px; margin-right:15px;" class="pull-left"><div class="post-thumb pull-left" style="width:50px;"><a class="post-thumb toSingle" data-id="' + data.posts[index].id + '" href="single.html"><img alt="Missing" class="img-rounded" src="photos/' + thumb + '/missing.png"></a></div></div><div class="post-content pull-left"><div style="font-weight:bold; font-size:18px"><a class="toSingle" data-id="' + data.posts[index].id + '" href="single.html">' + data.posts[index].title + '</a></div><p class="text-muted">Posted by <a class="toUser" href="profile.html" data-uid="' + userData[index].username + '" style="color:#000; text-decoration:none;">' + userData[index].username + '</a> ' + dateDiffInDays(data.posts[index].created_at) + '</p></div><div class="clearfix"></div></div>';
+            post = '<div class="post transfromOut"><div style="'+shadow+'inset 0px -4px 0px 0px #D7351C !important; height:53px; width:50px; border-radius:5px; margin-right:15px;" class="pull-left"><div class="post-thumb pull-left" style="width:50px;"><a class="post-thumb toSingle" data-id="' + data.posts[index].id + '" href="single.html"><img alt="Missing" class="img-rounded" src="'+ thumb + '"></a></div></div><div class="post-content pull-left"><div style="font-weight:bold; font-size:18px"><a class="toSingle" data-id="' + data.posts[index].id + '" href="single.html">' + data.posts[index].title + '</a></div><p class="text-muted">Posted by <a class="toUser" href="profile.html" data-uid="' + userData[index].username + '" style="color:#000; text-decoration:none;">' + userData[index].username + '</a> ' + dateDiffInDays(data.posts[index].created_at) + '</p></div><div class="clearfix"></div></div>';
             $('#add-post').prepend(post);
         });
         setTimeout(animateIn, 1000);
@@ -266,10 +281,20 @@ function getData(data) {
 
 function addSingleData(data) {
 
-    console.log(data);
 
     if (data.squawk.format == 'graffiti') {
         var text = '<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12"><div class="graffiti-text"><h1>' + data.squawk.graffiti_text + '</h1></div></div>';
+    }else if(data.squawk.format == 'image'){
+        var stringID = data.squawk.id;
+
+        while (stringID.toString().length < 3) {;
+            stringID = "0" + val.id.toString();
+        }
+
+        thumb = "http://dw0sh5ecbsahi.cloudfront.net/squawks/photos/000/000/"+stringID+"/original/"+data.squawk.photo_file_name;
+        var title = '<div class="row"><div class="col-xs-12 col-sm-12 col-md-12 col-lg-12"><h2 style="color:#000; font-family: proxima-nova, sans-serif; font-size: 30px; font-weight: bold;">' + data.squawk.title + '</h2></div></div>';
+        var text = '<div class="row"><div class="col-xs-12 col-sm-12 col-md-12 col-lg-12"><img alt="7981?1409528911" class="img-rounded" src="'+thumb+'" style="width:100%;"></div></div><br>';
+        text = title + text;
     } else {
         var title = '<div class="row"><div class="col-xs-12 col-sm-12 col-md-12 col-lg-12"><h2 style="color:#000; font-family: proxima-nova, sans-serif; font-size: 30px; font-weight: bold;">' + data.squawk.title + '</h2></div></div>';
         var text = '<div class="row"><div class="col-xs-12 col-sm-12 col-md-12 col-lg-12"><div style="padding-bottom:20px;"><p></p><p>' + data.squawk.description + '</p><p></p></div></div></div>';
@@ -648,9 +673,12 @@ jQuery(document).ready(function() {
             })
             .fail(function() {
                 console.log("error");
+            })
+            .always(function() {
             });
 
     });
+
     $('.navbar-toggle').click(function(event) {
         if ($('.navbar-collapse').hasClass('collapse')) {
             $('.navbar-collapse').removeClass('collapse');
@@ -694,5 +722,6 @@ jQuery(document).ready(function() {
         window.localStorage.setItem("profile_view", 'activity');
         window.location = $(this).attr('href');
     });
+
 
 });

@@ -25,7 +25,7 @@
         <meta name="format-detection" content="telephone=no">
         <meta name="msapplication-tap-highlight" content="no"><!-- WARNING: for iOS 7, remove the width=device-width and height=device-height attributes. See https://issues.apache.org/jira/browse/CB-4323 -->
         <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height">
-        <!-- <!-- <script type="text/javascript" src="cordova.js"></script> -->
+        <script type="text/javascript" src="cordova.js"></script>
         <script type="text/javascript" src="js/jquery.js"></script>
         <script type="text/javascript" src="js/index.js"></script>
         <!-- <script type="text/javascript" src="js/all.min.js"></script> -->
@@ -70,7 +70,7 @@
     </nav>
 <div class="header">
     <div class="container">
-        <h1>Text</h1>
+        <h1>Image</h1>
     </div>
 </div>
 
@@ -90,7 +90,9 @@
 <div class="container">
     <form accept-charset="UTF-8" action="http://squawkar.herokuapp.com/api/v1/squawks/" class="new_squawk image_squawk" enctype="multipart/form-data" id="new_squawk" method="post">
         <div class="form-group input-group-lg">
-            <label for="squawk_photo">Photo</label> <input id="squawk_photo" name="squawk[photo]" type="file">
+            <label for="squawk_photo">Photo</label> 
+            <button id="getPhoto">Select Photo:</button>
+            <!--<input id="squawk_photo" name="squawk[photo]" type="file"> -->
         </div>
         <div class="form-group input-group-lg">
             <label for="squawk_title">Title</label> <input class="form-control" id="squawk_title" name="squawk[title]" type="text">
@@ -131,17 +133,46 @@
 <script type="text/javascript">
     //$('form').append('<input type="hidden" name="user_token" value="'+window.localStorage.getItem('user_token')+'">');
 
+var imageData = null;
 
 $(document).ready(function() {
     $("form#new_squawk").submit(function(event){
         event.preventDefault();
 
+        if (imageData == null){
+            alert('No picture selected!');
+            return;
+        }
+
+        if ($('#squawk_title').val().length < 5 ){
+            alert("Title must be 5 or more characters!");
+            return;
+        }
+
         var siteUrl = 'http://squawkar.herokuapp.com/api/v1/squawks/';
         var formData = new FormData($(this)[0]);
 
+        var imageURI = imageData;
+
+        var options = new FileUploadOptions();
+        options.fileKey="squawk[photo]";
+        options.fileName=imageURI.substr(imageURI.lastIndexOf('/')+1);
+        options.mimeType="image/jpeg";
+
+        var params = new Object();
+        params['squawk[title]'] = $('#squawk_title').val();
+        params['squawk[category]'] = $('#squawk_category').val();
+        params['squawk[format]'] = 'image';
+
+        options.params = params;
+
+        var ft = new FileTransfer();
+        ft.upload(imageURI, siteUrl + "?user_token="+window.localStorage.getItem('user_token'), win, fail, options);
+        //ft.upload(imageURI, siteUrl + "?user_token="+window.localStorage.getItem('user_token')+"&squawk[title]=testt&squawk[category]=News&squawk[format]=image", win, fail, options);
+
         $('.actions').append('Uploading...');
 
-        $.ajax({
+        /*$.ajax({
             url: siteUrl + "?user_token="+window.localStorage.getItem('user_token'),
             type: 'POST',
             data: formData,
@@ -150,13 +181,48 @@ $(document).ready(function() {
             contentType: false,
             processData: false
           })
-        .complete(function() {
+        .complete(function(res) {
+            console.log(JSON.stringify(formData));
             window.location = "index.html";
-        });
+        });*/
 
         return false;
     });
 });
+
+function win(r) {
+    window.location = "index.html";
+}
+
+function fail(error) {
+    alert("Something went wrong. Please try again.");
+}
+
+$('#getPhoto').click(function(event) {
+
+    event.preventDefault();
+
+        pictureSource = navigator.camera.PictureSourceType;
+        destinationType = navigator.camera.DestinationType;
+
+        var source = pictureSource.PHOTOLIBRARY;
+
+        // Retrieve image file location from specified source
+        navigator.camera.getPicture(onSuccess, onFail, {
+            quality: 100,
+            destinationType: navigator.camera.DestinationType.FILE_URI,
+            sourceType: navigator.camera.PictureSourceType.PHOTOLIBRARY
+        });
+});
+
+
+    function onSuccess(imageURI) {
+        imageData = imageURI;
+    }
+
+    function onFail(message) {
+        alert('Failed because: ' + message);
+    }
 
 </script>
 </html>
