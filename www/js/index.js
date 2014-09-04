@@ -478,7 +478,8 @@ function addComment(postId, comment, isGraffiti) {
 
 function registration() {
     var url = 'http://squawkar.herokuapp.com/api/v1/api_users/sign_up';
-
+	console.log('ok');
+	return;
     $.ajax({
         type: 'GET',
         url: url,

@@ -863,10 +863,21 @@
 									<div class="form-group input-group-lg">
 										<label for="user_password_confirmation">Password confirmation</label> <input class="form-control" id="user_password_confirmation" name="user[password_confirmation]" type="password">
 									</div>
+									<div class="form-group input-group-lg">
+										<input style="vertical-align: middle; margin-top: 0" id="read_terms" name="read_terms" value="1" type="checkbox"> <span style="font-size: 85%">I agree that I've read the <a href="terms.html">Terms and Conditions</a></span>
+									</div>
 									<div>
 										<input class="btn btn-wi btn-lg btn-block" name="commit" type="submit" value="Sign Up">
 									</div>
 								</form>
+								<script type="text/javascript" charset="utf-8">
+									$('.new_user').submit(function(e){
+										if (! $('#read_terms').is(':checked')) {
+											e.preventDefault();
+											alert("Please read our Terms and Conditions.");
+										}
+									});
+								</script>
 							</div>
 						</div>
 					</div>
