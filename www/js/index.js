@@ -329,7 +329,12 @@ function addSingleData(data) {
         window.localStorage.setItem("profile_view", 'activity');
         window.location = 'profile.html';
     });
-
+    
+    // reply scroll up
+	$('#comment_message').focus(function(){
+		var offset = $(this).offset();
+		$('body,html').animate({'scrollTop' : offset.top - 50 + "px"}, 400);
+	});
 }
 
 function getSingle() {
