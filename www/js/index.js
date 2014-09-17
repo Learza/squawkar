@@ -747,7 +747,7 @@ jQuery(document).ready(function() {
 		        jsonp: "callback",
 		        crossDomain: true,
 		        success: function(res) {
-		            console.log(res);
+		            alert("Thank you for reporting this squawk. Our administrators will decide within 24 hours whether to remove it.");
 		        },
 		        error: function(res) {
 		            console.log(error);
