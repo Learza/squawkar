@@ -280,8 +280,7 @@ function getData(data) {
 
 
 function addSingleData(data) {
-
-
+	
     if (data.squawk.format == 'graffiti') {
         var text = '<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12"><div class="graffiti-text"><h1>' + data.squawk.graffiti_text + '</h1></div></div>';
     }else if(data.squawk.format == 'image'){
@@ -292,18 +291,25 @@ function addSingleData(data) {
         }
 
         thumb = "http://dw0sh5ecbsahi.cloudfront.net/squawks/photos/000/000/"+stringID+"/original/"+data.squawk.photo_file_name;
-        var title = '<div class="row"><div class="col-xs-12 col-sm-12 col-md-12 col-lg-12"><h2 style="color:#000; font-family: proxima-nova, sans-serif; font-size: 30px; font-weight: bold;">' + data.squawk.title + '</h2></div></div>';
-        var text = '<div class="row"><div class="col-xs-12 col-sm-12 col-md-12 col-lg-12"><img alt="7981?1409528911" class="img-rounded" src="'+thumb+'" style="width:100%;"></div></div><br>';
+        var title = '<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12"><h2 style="color:#000; font-family: proxima-nova, sans-serif; font-size: 30px; font-weight: bold;">' + data.squawk.title + '</h2></div>';
+        var text = '<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12"><img alt="7981?1409528911" class="img-rounded" src="'+thumb+'" style="width:100%;"></div><br>';
         text = title + text;
     } else {
-        var title = '<div class="row"><div class="col-xs-12 col-sm-12 col-md-12 col-lg-12"><h2 style="color:#000; font-family: proxima-nova, sans-serif; font-size: 30px; font-weight: bold;">' + data.squawk.title + '</h2></div></div>';
-        var text = '<div class="row"><div class="col-xs-12 col-sm-12 col-md-12 col-lg-12"><div style="padding-bottom:20px;"><p></p><p>' + data.squawk.description + '</p><p></p></div></div></div>';
+        var title = '<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12"><h2 style="color:#000; font-family: proxima-nova, sans-serif; font-size: 30px; font-weight: bold;">' + data.squawk.title + '</h2></div>';
+        var text = '<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12"><div style="padding-bottom:20px;"><p></p><p>' + data.squawk.description + '</p><p></p></div></div>';
         text = title + text;
     }
 
     var authorData = '<a class="toUser" data-uid="' + data.userdata[0].username + '" href="/profile/' + data.userdata[0].username + '" style="text-decoration:none;"><img alt="Missing" class="img-rounded" src="img/missing.png"></a> <strong style="font-size:20px; margin-left:5px;"><a class="toUser" data-uid="' + data.userdata[0].username + '" href="/profile/' + data.userdata[0].username + '" style="color:#000; text-decoration:none;">' + data.userdata[0].username + '</a></strong> - <strong syle="font-size:18px; font-weight:normal;">Posted ' + dateDiffInDays(data.squawk.created_at) + '</strong>';
-    $('#text').html(text);
+    $('#text').html(text).data('id', data.squawk.id);
     $('#author-data').html(authorData);
+    
+    if (window.localStorage.getItem('user_token') == -1) {
+    	$('#report').hide();
+    }
+    
+    $('#share .fb').attr('href', 'https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fwww.squawkar.com%2Fsquawks%2F' + data.squawk.id);
+    $('#share .tw').attr('href', 'http://twitter.com/share?url=http%3A%2F%2Fwww.squawkar.com%2Fsquawks%2F' + data.squawk.id);
 
     if (data.comments.length > 0) {
         $.each(data.comments, function(index, val) {
@@ -727,6 +733,28 @@ jQuery(document).ready(function() {
         window.localStorage.setItem("userProfileId", $(this).data('uid'));
         window.localStorage.setItem("profile_view", 'activity');
         window.location = $(this).attr('href');
+    });
+    
+    $('#report a').click(function(e){
+        e.preventDefault();
+        if (confirm("Do you really want to report this squawk as objectionable content?")) {
+        	var url = 'http://squawkar.herokuapp.com/api/v1/squawks/' + $('#text').data('id') + '/flag?user_token=' + window.localStorage.getItem('user_token');
+        	$.ajax({
+		        type: 'GET',
+		        url: url,
+		        contentType: "application/json",
+		        dataType: 'jsonp',
+		        jsonp: "callback",
+		        crossDomain: true,
+		        success: function(res) {
+		            console.log(res);
+		        },
+		        error: function(res) {
+		            console.log(error);
+		        }
+		    });
+        	
+        }
     });
 
 

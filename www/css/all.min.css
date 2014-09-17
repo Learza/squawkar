@@ -141,6 +141,12 @@ table {
 
 p.hide-onLoggedin{margin-top: 15px}
 
+
+@font-face {
+    font-family: 'MotorOil';
+    src: url("../fonts/motoroil.ttf") format("truetype");
+}
+
 .top-menu li div{height: 0;overflow: hidden;}
 .top-menu>li:first-of-type {
 /*width: 100%;
@@ -8718,3 +8724,7 @@ p {
     .center-banner h3 { margin-top: 10px; margin-bottom: 0; font-size: 30px; }
 }
 #new_comment { margin-bottom: 300px; }
+#report { text-align: right; padding-right: 17px; }
+#share { text-align: center; }
+
+.navbar > .container .navbar-brand .pull-left { font-family: 'MotorOil' !important; font-weight: 400 !important; letter-spacing: -3px; }
