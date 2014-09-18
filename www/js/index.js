@@ -487,10 +487,23 @@ function addComment(postId, comment, isGraffiti) {
 
 }
 
+function validateEmail(email) {
+    var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(email);
+}
+
 function registration() {
-    var url = 'http://squawkar.herokuapp.com/api/v1/api_users';
-	console.log('ok');
-	return;
+
+    event.preventDefault();
+
+    var url = 'http://squawkar.herokuapp.com/api/v1/api_users/sign_up';
+
+    if (!validateEmail($('#user_email').val()))
+        alert("Please enter a valid e-mail address!");
+    if ( $('#user_password').val() != $('#user_password_confirmation').val() )
+        alert("Passwords doesn't match!");
+
+
     $.ajax({
         type: 'GET',
         url: url,
@@ -498,30 +511,34 @@ function registration() {
         dataType: 'jsonp',
         jsonp: "callback",
         crossDomain: true,
+        timeout: 5000,
         data: {
+            utf8 : $('[name="utf8"]').val(),
             api_user: {
-                name: 'teszt',
-                username: 'test2',
-                email: 'test2@email.com',
-                gender: 'Male',
-                location: 'Hungary',
-                password: '12345678',
-                password_confirmation: '12345678'
+                name: $('#user_name').val(),
+                username: $('#user_username').val(),
+                email: $('#user_email').val(),
+                gender: $('#user_gender').val(),
+                location: $('#user_location').val(),
+                password: $('#user_password').val(),
+                password_confirmation: $('#user_password_confirmation').val()
             },
-
+            read_terms: $('#read_terms').val(),
             commit: 'Sign Up'
         },
         success: function(res) {
-            console.log(res);
+            window.location = "sign_in.html";
         },
         error: function(res) {
-            console.log(error);
+            alert("Your email address already registered or the username is already taken");
         }
     });
+
+    return false;
+
 }
 
 function like(action, postId, commentId) {
-
 
     if (window.localStorage.getItem('user_token') == -1) return;
 
