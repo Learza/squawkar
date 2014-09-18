@@ -18,7 +18,7 @@
  */
 
     var pictureSource;   // picture source
-    var destinationType; // sets the format of returned value 
+    var destinationType; // sets the format of returned value
 var app = {
     // Application Constructor
     initialize: function() {
@@ -280,7 +280,7 @@ function getData(data) {
 
 
 function addSingleData(data) {
-	
+
     if (data.squawk.format == 'graffiti') {
         var text = '<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12"><div class="graffiti-text"><h1>' + data.squawk.graffiti_text + '</h1></div></div>';
     }else if(data.squawk.format == 'image'){
@@ -303,11 +303,11 @@ function addSingleData(data) {
     var authorData = '<a class="toUser" data-uid="' + data.userdata[0].username + '" href="/profile/' + data.userdata[0].username + '" style="text-decoration:none;"><img alt="Missing" class="img-rounded" src="img/missing.png"></a> <strong style="font-size:20px; margin-left:5px;"><a class="toUser" data-uid="' + data.userdata[0].username + '" href="/profile/' + data.userdata[0].username + '" style="color:#000; text-decoration:none;">' + data.userdata[0].username + '</a></strong> - <strong syle="font-size:18px; font-weight:normal;">Posted ' + dateDiffInDays(data.squawk.created_at) + '</strong>';
     $('#text').html(text).data('id', data.squawk.id);
     $('#author-data').html(authorData);
-    
+
     if (window.localStorage.getItem('user_token') == -1) {
     	$('#report').hide();
     }
-    
+
     $('#share .fb').attr('href', 'https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fwww.squawkar.com%2Fsquawks%2F' + data.squawk.id);
     $('#share .tw').attr('href', 'http://twitter.com/share?url=http%3A%2F%2Fwww.squawkar.com%2Fsquawks%2F' + data.squawk.id);
 
@@ -335,7 +335,7 @@ function addSingleData(data) {
         window.localStorage.setItem("profile_view", 'activity');
         window.location = 'profile.html';
     });
-    
+
     // reply scroll up
 	$('#comment_message').focus(function(){
 		var offset = $(this).offset();
@@ -488,7 +488,7 @@ function addComment(postId, comment, isGraffiti) {
 }
 
 function registration() {
-    var url = 'http://squawkar.herokuapp.com/api/v1/api_users/sign_up';
+    var url = 'http://squawkar.herokuapp.com/api/v1/api_users';
 	console.log('ok');
 	return;
     $.ajax({
@@ -737,7 +737,7 @@ jQuery(document).ready(function() {
         window.localStorage.setItem("profile_view", 'activity');
         window.location = $(this).attr('href');
     });
-    
+
     $('#report a').click(function(e){
         e.preventDefault();
         if (confirm("Do you really want to report this squawk as objectionable content?")) {
@@ -756,7 +756,7 @@ jQuery(document).ready(function() {
 		            console.log(error);
 		        }
 		    });
-        	
+
         }
     });
 
