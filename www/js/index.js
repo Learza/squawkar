@@ -684,7 +684,10 @@ jQuery(document).ready(function() {
                 window.location = 'index.html';
             })
             .fail(function() {
-                console.log("error");
+                alert("Invalid username or password.");
+            })
+            .error(function() {
+                alert("Invalid username or password.");
             })
             .always(function() {
             });
