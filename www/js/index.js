@@ -391,7 +391,7 @@ function createPost(title, description, category, format) {
 
     if (format == 'text' && (title.length < 5 || title.length >= 90)) return 'title_error';
 
-    else if (format == 'text' && description.length > 200) return 'description_error';
+    else if (format == 'text' && description.length > 1000) return 'description_error';
     else if (category.length < 1 || category.length >= 20) return 'category_error';
 
     var url = 'http://squawkar.herokuapp.com/api/v1/squawks/new?user_token=' + window.localStorage.getItem('user_token');

@@ -88,39 +88,43 @@
 <hr>
 
 <div class="container">
-    <form accept-charset="UTF-8" action="/squawks" class="new_squawk" id="new_squawk" method="post"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="✓"><input name="authenticity_token" type="hidden" value="3JnCt7n5Cv8Ek8fILc9scIIHn9mxri46wEZA9C7JbY0="></div>
+    <form accept-charset="UTF-8" action="/squawks" class="new_squawk" id="new_squawk" method="post">
+        <div style="margin:0;padding:0;display:inline">
+            <input name="utf8" type="hidden" value="✓">
+            <input name="authenticity_token" type="hidden" value="3JnCt7n5Cv8Ek8fILc9scIIHn9mxri46wEZA9C7JbY0=">
+        </div>
 
 
-    <div class="form-group input-group-lg">
-      <label for="squawk_title">Title</label>
-      <input class="form-control" id="squawk_title" name="squawk[title]" type="text">
-    </div>
+        <div class="form-group input-group-lg">
+          <label for="squawk_title">Title</label>
+          <input class="form-control" id="squawk_title" name="squawk[title]" type="text">
+        </div>
 
-    <div class="form-group input-group-lg">
-      <label for="squawk_description">Message</label>
-      <textarea class="form-control" id="squawk_description" name="squawk[description]" style="height:140px;"></textarea>
-    </div>
+        <div class="form-group input-group-lg">
+          <label for="squawk_description">Message</label>
+          <textarea class="form-control" id="squawk_description" name="squawk[description]" style="height:140px;"></textarea>
+        </div>
 
 
-  <div class="form-group input-group-lg">
-    <label for="squawk_category">Category</label>
-    <input class="form-control" id="squawk_category" name="squawk[category]" type="text">
+      <div class="form-group input-group-lg">
+        <label for="squawk_category">Category</label>
+        <input class="form-control" id="squawk_category" name="squawk[category]" type="text">
 
-    <div style="margin-top:10px;">
-      <a href="#" style="color:#FF5200; font-weight:bold; margin-right:5px;" data-category="news" class="category-button">News</a>
-      <a href="#" style="color:#FF5200; font-weight:bold; margin-right:5px;" data-category="politics" class="category-button">Politics</a>
-      <a href="#" style="color:#FF5200; font-weight:bold; margin-right:5px;" data-category="sport" class="category-button">Sport</a>
-      <a href="#" style="color:#FF5200; font-weight:bold; margin-right:5px;" data-category="entertainment" class="category-button">Entertainment</a>
-      <a href="#" style="color:#FF5200; font-weight:bold; margin-right:5px;" data-category="funny" class="category-button">Witty and Weird</a>
-      <a href="#" style="color:#FF5200; font-weight:bold; margin-right:5px;" data-category="technologyenvironment" class="category-button">Technology &amp; Environment</a>
-    </div>
-  </div>
+        <div style="margin-top:10px;">
+          <a href="#" style="color:#FF5200; font-weight:bold; margin-right:5px;" data-category="news" class="category-button">News</a>
+          <a href="#" style="color:#FF5200; font-weight:bold; margin-right:5px;" data-category="politics" class="category-button">Politics</a>
+          <a href="#" style="color:#FF5200; font-weight:bold; margin-right:5px;" data-category="sport" class="category-button">Sport</a>
+          <a href="#" style="color:#FF5200; font-weight:bold; margin-right:5px;" data-category="entertainment" class="category-button">Entertainment</a>
+          <a href="#" style="color:#FF5200; font-weight:bold; margin-right:5px;" data-category="funny" class="category-button">Witty and Weird</a>
+          <a href="#" style="color:#FF5200; font-weight:bold; margin-right:5px;" data-category="technologyenvironment" class="category-button">Technology &amp; Environment</a>
+        </div>
+      </div>
 
-  <input id="squawk_format" name="squawk[format]" type="hidden" value="text">
+      <input id="squawk_format" name="squawk[format]" type="hidden" value="text">
 
-  <div class="actions">
-    <input id="add-new" class="btn btn-lg btn-wi" name="commit" type="submit" value="Squawk">
-  </div>
+      <div class="actions">
+        <input id="add-new-1" class="btn btn-lg btn-wi" name="commit" type="submit" value="Squawk">
+      </div>
 </form>
 </div>
     </div>
@@ -143,4 +147,53 @@
         </div>
     </div>
 </body>
+<script>
+
+    $(document).ready(function() {
+
+        $("form#new_squawk").submit(function(event){
+            event.preventDefault();
+
+            var errorType = "";
+
+            if (window.localStorage.getItem('user_token') == -1) return false;
+
+            if ($('#squawk_title').val().length < 5 || $('#squawk_title').val().length >= 90){
+                alert('Title must be between 5 and 20 characters');
+                return false;
+            }
+            else if ($('#squawk_description').val().length > 1000){
+                alert('Description must be less than 1000 characters');
+                return false;
+            }
+            else if ($('#squawk_category').val().length < 1 || $('#squawk_category').val().length >= 20){
+                alert('Category must be filled');
+                return false;
+            }
+
+            var siteUrl = 'http://squawkar.herokuapp.com/api/v1/squawks/new?user_token=' + window.localStorage.getItem('user_token');
+            var postData = $(this).serialize();
+
+            $.ajax({
+                type: 'POST',
+                data: postData,
+                url: siteUrl,
+                contentType: "application/json",
+                dataType: 'jsonp',
+                jsonp: "callback",
+                success: function(data){
+                    console.log(data);
+                },
+                error: function(){
+                    console.log("fail");
+                }
+            });
+
+            window.location = "index.html";
+
+            return false;
+        });
+    });
+
+</script>
 </html>
