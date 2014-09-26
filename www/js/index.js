@@ -391,7 +391,7 @@ function createPost(title, description, category, format) {
 
     if (format == 'text' && (title.length < 5 || title.length >= 90)) return 'title_error';
 
-    else if (format == 'text' && description.length > 1000) return 'description_error';
+    else if (format == 'text' && description.length > 2000) return 'description_error';
     else if (category.length < 1 || category.length >= 20) return 'category_error';
 
     var url = 'http://squawkar.herokuapp.com/api/v1/squawks/new?user_token=' + window.localStorage.getItem('user_token');
@@ -743,7 +743,7 @@ jQuery(document).ready(function() {
         var response = createPost(title, description, category, format);
 
         if (response == "title_error") alert('Title must be between 5 and 20 characters');
-        else if (response == "description_error") alert('Description must be less than 200 characters');
+        else if (response == "description_error") alert('Description must be less than 2000 characters');
         else if (response == "category_error") alert('Category must be filled');
         else window.location = "index.html";
     });

@@ -159,11 +159,11 @@
             if (window.localStorage.getItem('user_token') == -1) return false;
 
             if ($('#squawk_title').val().length < 5 || $('#squawk_title').val().length >= 90){
-                alert('Title must be between 5 and 20 characters');
+                alert('Title must be between 5 and 90 characters');
                 return false;
             }
-            else if ($('#squawk_description').val().length > 1000){
-                alert('Description must be less than 1000 characters');
+            else if ($('#squawk_description').val().length > 2000){
+                alert('Description must be less than 2000 characters');
                 return false;
             }
             else if ($('#squawk_category').val().length < 1 || $('#squawk_category').val().length >= 20){
