@@ -129,6 +129,7 @@ function addPost(data) {
                         }
                     }, 2100);
                 });
+                $('#loading-indicator').fadeIn();
             });
         }
 
@@ -244,6 +245,7 @@ function animateIn() {
             $(el).addClass('has-transition').removeClass('transfromOut');
         }, 30 * index);
     });
+    $('#loading-indicator').fadeOut();
 }
 
 function toSingle() {
@@ -626,13 +628,21 @@ jQuery(document).ready(function() {
         notifications('alll');
     });
 
-    $('.top-menu>li:first-of-type').click(function(event) {
+    $('.top-menu>li:first-of-type').not('.new-squawk-li').click(function(event) {
         event.preventDefault();
         if ($('.top-menu li div').hasClass('show-menu')) {
             $('.top-menu li div').removeClass('show-menu').css('height', '0px');
         } else {
             $('.top-menu li div').addClass('show-menu').css('height', $('.top-menu ul.nav').height());
         }
+    });
+    $('.new-squawk-li').click(function(e){
+    	e.preventDefault();
+    	if (window.localStorage.getItem("user_token") == -1) {
+    		window.location.href = "sign_in.html";
+    	} else {
+    		window.location.href = "new.html";
+    	}
     });
 
     $('#search button').click(function(e) {
@@ -656,6 +666,7 @@ jQuery(document).ready(function() {
                 }
             }, 2100);
         });
+  	    $('#loading-indicator').fadeIn();
         return false;
     });
 
@@ -680,6 +691,8 @@ jQuery(document).ready(function() {
                 }
             }, 2100);
         });
+        $('.top-menu li div').removeClass('show-menu').css('height', '0px');
+        $('#loading-indicator').fadeIn();
     });
 
     $('#login_btn').click(function(event) {

@@ -8728,3 +8728,4 @@ p {
 #share { text-align: center; }
 
 .navbar > .container .navbar-brand .pull-left { font-family: 'MotorOil' !important; font-weight: 400 !important; letter-spacing: -3px; }
+#loading-indicator { position: absolute; z-index: 0; left: 50%; margin-left: -100px; top: 200px; width: 200px; height: 200px; background: url('../img/loading.gif'); background-size: cover; }
