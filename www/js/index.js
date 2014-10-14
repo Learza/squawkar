@@ -500,10 +500,18 @@ function registration() {
 
     var url = 'http://squawkar.herokuapp.com/api/v1/api_users/sign_up';
 
-    if (!validateEmail($('#user_email').val()))
+    if (!validateEmail($('#user_email').val())){
         alert("Please enter a valid e-mail address!");
-    if ( $('#user_password').val() != $('#user_password_confirmation').val() )
+        return false;
+    }
+
+    if ( $('#user_password').val() != $('#user_password_confirmation').val() ){
         alert("Passwords doesn't match!");
+        return false;
+    }else if ($('#user_password').val().length < 8){
+        alert("Passwords must be at least 8 characters!");
+        return false;
+    }
 
 
     $.ajax({
