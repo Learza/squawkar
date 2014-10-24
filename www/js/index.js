@@ -623,7 +623,8 @@ jQuery(document).ready(function() {
     }
 
 
-    $('.category-button').click(function() {
+    $('.category-button').click(function(e) {
+    	e.preventDefault();
         $('#squawk_category').val($(this).data('category'));
     });
 
