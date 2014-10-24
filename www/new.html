@@ -186,13 +186,12 @@
                 jsonp: "callback",
                 success: function(data){
                     console.log(data);
+                    window.location = "index.html";
                 },
                 error: function(){
                     console.log("fail");
                 }
             });
-
-            window.location = "index.html";
 
             return false;
         });
