@@ -188,9 +188,8 @@ function getProfileData(name) {
         jsonp: "callback",
         crossDomain: true,
         success: function(res) {
-            console.log(res);
             $('.usr-name').html('<i class="icon-user"></i>' + res.user.slug);
-            $('.joined').html('<i class="glyphicon glyphicon-time"></i>' + dateDiffInDays(res.user.created_at));
+            $('.joined').html('Joined ' + dateDiffInDays(res.user.created_at));
             if (window.localStorage.getItem('page') == 'squawks') addSquawks(res);
             else if (window.localStorage.getItem('page') == 'favourites') addFavourites(res);
             else addActivity(res);
@@ -232,7 +231,6 @@ function addFavourites(data) {
 
 function addActivity(data) {
     $.each(data.activities, function(index, val) {
-        //var html = '<div class="col-lg-12"> <div style="box-shadow: 0px 0px 0px 0px rgba(34, 34, 34, 0.15),inset 0px -4px 0px 0px #D7351C !important; height:53px; width:50px; border-radius:5px;  margin-right:15px;" class="pull-left"> <div class="post-thumb pull-left" style="width:50px;"> <a class="post-thumb" href="single.html" data-id="' + val.id + '"> <img alt="Missing" class="img-rounded" src="photos/text/missing.png"></a> </div> </div> <div class="post-content pull-left"> <div style="font-weight:bold; font-size:18px;"> <span style="font-weight:normal;">Posted</span> <a href="/squawks/61">testt</a> </div> <p class="text-muted">Posted by <a href="/profile/azrael" style="color:#000; text-decoration:none;">azrael</a> 6 days ago</p> </div> <div class="clearfix"></div> </div>';
         var html = '<div class="post"> <div style="box-shadow: 0px 0px 0px 0px rgba(34, 34, 34, 0.15),inset 0px -4px 0px 0px #D7351C !important; height:53px; width:50px; border-radius:5px; margin-right:15px;" class="pull-left"> <div class="post-thumb pull-left" style="width:50px;"> <a class="post-thumb toSingle" href="single.html" data-id="' + val.id + '" style=""><img alt="Missing" class="img-rounded" src="photos/' + data.squawks[index].format + '/missing.png"></a> </div> </div> <div class="post-content pull-left"> <div style="font-weight:bold; font-size:18px;"> <a href="single.html" data-id="' + val.trackable_id + '">' + ((data.squawks[index].format == "text") ? data.squawks[index].title : data.squawks[index].graffiti_text) + '</a> </div> <p class="text-muted">Posted by <a href="profile.html" class="toUser" data-uid="' + data.user.slug + '" style="color:#000; text-decoration:none;">' + data.user.slug + '</a> ' + dateDiffInDays(val.created_at) + '</p> </div> <div class="clearfix"></div> </div>';
         $('.activity').append(html);
     });
@@ -798,6 +796,7 @@ jQuery(document).ready(function() {
 
         }
     });
-
+	
+	$('.profile_link').filter(function(){ return ! $(this).data('uid'); }).data('uid', window.localStorage.getItem('user_name'));
 
 });
