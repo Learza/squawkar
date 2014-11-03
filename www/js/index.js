@@ -535,7 +535,7 @@ function registration() {
             commit: 'Sign Up'
         },
         success: function(res) {
-            window.location = "sign_in.html";
+            window.location = "sign_in_success.html";
         },
         error: function(res) {
             alert("Your email address already registered or the username is already taken");
