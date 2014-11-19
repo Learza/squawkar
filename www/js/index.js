@@ -269,7 +269,7 @@ function getData(data) {
         crossDomain: true,
         success: function(res) {
             addPost(res);
-            console.log(res);
+            //console.log(res);
             $('.toSingle').bind('click', toSingle);
         },
         error: function(res) {
@@ -504,9 +504,9 @@ function registration() {
     }
 
     if ( $('#user_password').val() != $('#user_password_confirmation').val() ){
-        alert("Passwords doesn't match!");
+        alert("Passwords don't match!");
         return false;
-    }else if ($('#user_password').val().length < 8){
+    } else if ($('#user_password').val().length < 8){
         alert("Passwords must be at least 8 characters!");
         return false;
     }
@@ -535,7 +535,11 @@ function registration() {
             commit: 'Sign Up'
         },
         success: function(res) {
-            window.location = "sign_in_success.html";
+        	if (res.success) {
+        		window.location = "sign_in_success.html";
+        	} else {
+        		alert("Your email address already registered or the username is already taken");
+        	}
         },
         error: function(res) {
             alert("Your email address already registered or the username is already taken");
@@ -716,9 +720,13 @@ jQuery(document).ready(function() {
             }
         })
             .done(function(res) {
-                window.localStorage.setItem("user_token", res.user_token);
-                window.localStorage.setItem("user_name", res.username);
-                window.location = 'index.html';
+               if (res.success) {
+	               window.localStorage.setItem("user_token", res.user_token);
+	               window.localStorage.setItem("user_name", res.username);
+	               window.location = 'index.html';
+               } else {
+                   alert("Invalid username or password.");
+               }
             })
             .fail(function() {
                 alert("Invalid username or password.");
